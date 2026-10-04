@@ -1,0 +1,2378 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Sanjay Textiles - Waste Management & Circular Recycling Platform</title>
+  <meta name="description"
+    content="Next-Generation Textile Waste Management, Circular Recycling, AI Fabric Classification, and Upcycled Marketplace Platform." />
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Outfit:wght@400;600;700;800&family=JetBrains+Mono:wght@500;700&display=swap"
+    rel="stylesheet">
+
+  <!-- Chart.js Library -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+
+  <style>
+    /* ==========================================================================
+       DESIGN SYSTEM & THEME VARIABLES
+       ========================================================================== */
+    :root {
+      --bg-base: #060911;
+      --bg-surface: #0f172a;
+      --bg-glass: rgba(15, 23, 42, 0.85);
+      --bg-glass-card: rgba(30, 41, 59, 0.6);
+      --border-color: rgba(255, 255, 255, 0.08);
+      --border-glow: rgba(16, 185, 129, 0.3);
+
+      --text-main: #f8fafc;
+      --text-muted: #94a3b8;
+      --text-dim: #64748b;
+
+      --primary: #10b981;
+      --primary-hover: #059669;
+      --primary-glow: rgba(16, 185, 129, 0.25);
+
+      --accent-indigo: #6366f1;
+      --accent-indigo-hover: #4f46e5;
+      --accent-cyan: #06b6d4;
+      --accent-amber: #f59e0b;
+      --accent-rose: #f43f5e;
+
+      --radius-sm: 10px;
+      --radius-md: 16px;
+      --radius-lg: 24px;
+
+      --shadow-sm: 0 4px 12px rgba(0, 0, 0, 0.2);
+      --shadow-lg: 0 12px 32px rgba(0, 0, 0, 0.45);
+      --backdrop-blur: blur(16px);
+      --transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    [data-theme="light"] {
+      --bg-base: #f1f5f9;
+      --bg-surface: #ffffff;
+      --bg-glass: rgba(255, 255, 255, 0.9);
+      --bg-glass-card: rgba(255, 255, 255, 0.92);
+      --border-color: rgba(0, 0, 0, 0.08);
+      --border-glow: rgba(16, 185, 129, 0.3);
+
+      --text-main: #0f172a;
+      --text-muted: #475569;
+      --text-dim: #94a3b8;
+    }
+
+    /* Reset & Base Styles */
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      background-color: var(--bg-base);
+      color: var(--text-main);
+      line-height: 1.5;
+      min-height: 100vh;
+      overflow-x: hidden;
+      transition: background-color 0.3s ease, color 0.3s ease;
+    }
+
+    h1, h2, h3, h4, h5, h6 {
+      font-family: 'Outfit', sans-serif;
+      font-weight: 700;
+      color: var(--text-main);
+    }
+
+    .font-mono { font-family: 'JetBrains Mono', monospace; }
+
+    .text-gradient {
+      background: linear-gradient(135deg, #10b981 0%, #06b6d4 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .text-gradient-indigo {
+      background: linear-gradient(135deg, #818cf8 0%, #c084fc 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .text-gradient-gold {
+      background: linear-gradient(135deg, #f59e0b 0%, #fbbf24 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    /* Glass Panels */
+    .glass-panel {
+      background: var(--bg-glass-card);
+      backdrop-filter: var(--backdrop-blur);
+      -webkit-backdrop-filter: var(--backdrop-blur);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-md);
+      box-shadow: var(--shadow-sm);
+      transition: var(--transition);
+    }
+
+    .glass-panel:hover {
+      border-color: rgba(255, 255, 255, 0.15);
+      box-shadow: var(--shadow-lg);
+    }
+
+    /* Buttons */
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+      padding: 0.65rem 1.25rem;
+      font-size: 0.9rem;
+      font-weight: 600;
+      border-radius: var(--radius-sm);
+      border: none;
+      cursor: pointer;
+      transition: var(--transition);
+      text-decoration: none;
+    }
+
+    .btn:active { transform: scale(0.98); }
+
+    .btn-primary {
+      background: linear-gradient(135deg, #10b981, #059669);
+      color: #ffffff;
+      box-shadow: 0 4px 14px var(--primary-glow);
+    }
+
+    .btn-primary:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(16, 185, 129, 0.4);
+    }
+
+    .btn-indigo {
+      background: linear-gradient(135deg, #6366f1, #4f46e5);
+      color: #ffffff;
+      box-shadow: 0 4px 14px rgba(99, 102, 241, 0.3);
+    }
+
+    .btn-indigo:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(99, 102, 241, 0.4);
+    }
+
+    .btn-gold {
+      background: linear-gradient(135deg, #f59e0b, #d97706);
+      color: #ffffff;
+    }
+
+    .btn-danger {
+      background: linear-gradient(135deg, #f43f5e, #e11d48);
+      color: #ffffff;
+      box-shadow: 0 4px 14px rgba(244, 63, 94, 0.3);
+    }
+
+    .btn-outline {
+      background: transparent;
+      border: 1px solid var(--border-color);
+      color: var(--text-main);
+    }
+
+    .btn-outline:hover {
+      background: rgba(255, 255, 255, 0.05);
+      border-color: var(--text-muted);
+    }
+
+    .btn-sm { padding: 0.4rem 0.85rem; font-size: 0.8rem; }
+
+    /* Form Controls */
+    .form-group { margin-bottom: 1rem; }
+    .form-label {
+      display: block;
+      font-size: 0.825rem;
+      font-weight: 600;
+      color: var(--text-muted);
+      margin-bottom: 0.35rem;
+    }
+
+    .form-control {
+      width: 100%;
+      padding: 0.75rem 1rem;
+      background: var(--bg-surface);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-sm);
+      color: var(--text-main);
+      font-size: 0.9rem;
+      transition: var(--transition);
+      outline: none;
+    }
+
+    .form-control:focus {
+      border-color: var(--primary);
+      box-shadow: 0 0 0 3px var(--primary-glow);
+    }
+
+    .form-select {
+      appearance: none;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%2394a3b8'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M19 9l-7 7-7-7'%3E%3C/path%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: right 1rem center;
+      background-size: 1.25rem;
+    }
+
+    /* Badges */
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.3rem;
+      padding: 0.25rem 0.65rem;
+      font-size: 0.75rem;
+      font-weight: 700;
+      border-radius: 20px;
+      text-transform: uppercase;
+      letter-spacing: 0.03em;
+    }
+
+    .badge-emerald { background: rgba(16, 185, 129, 0.15); color: #34d399; border: 1px solid rgba(16, 185, 129, 0.3); }
+    .badge-indigo { background: rgba(99, 102, 241, 0.15); color: #818cf8; border: 1px solid rgba(99, 102, 241, 0.3); }
+    .badge-gold { background: rgba(245, 158, 11, 0.15); color: #fbbf24; border: 1px solid rgba(245, 158, 11, 0.3); }
+    .badge-cyan { background: rgba(6, 182, 212, 0.15); color: #22d3ee; border: 1px solid rgba(6, 182, 212, 0.3); }
+    .badge-rose { background: rgba(244, 63, 94, 0.15); color: #fb7185; border: 1px solid rgba(244, 63, 94, 0.3); }
+
+    /* Grids */
+    .grid-2 { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1.25rem; }
+    .grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.25rem; }
+    .grid-4 { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1.25rem; }
+
+    /* Authentication Split Screen Layout */
+    .auth-wrapper {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      min-height: 100vh;
+      background: var(--bg-base);
+    }
+
+    .auth-hero-panel {
+      position: relative;
+      background: radial-gradient(circle at 20% 30%, rgba(16, 185, 129, 0.15) 0%, transparent 50%),
+                  radial-gradient(circle at 80% 70%, rgba(99, 102, 241, 0.15) 0%, transparent 50%),
+                  #070a12;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      padding: 3.5rem;
+      border-right: 1px solid var(--border-color);
+      overflow: hidden;
+    }
+
+    .hero-orb {
+      position: absolute;
+      border-radius: 50%;
+      filter: blur(80px);
+      pointer-events: none;
+    }
+    .hero-orb-1 { width: 300px; height: 300px; background: rgba(16, 185, 129, 0.2); top: -50px; left: -50px; }
+    .hero-orb-2 { width: 400px; height: 400px; background: rgba(99, 102, 241, 0.15); bottom: -100px; right: -50px; }
+
+    .hero-slogan-block { z-index: 2; margin-top: 2rem; }
+    .hero-slogan-title { font-size: 2.75rem; line-height: 1.15; margin-bottom: 0.75rem; }
+    .hero-slogan-sub { color: var(--text-muted); font-size: 0.95rem; max-width: 90%; }
+
+    .hero-stats-row { display: flex; gap: 1.25rem; margin-top: 2rem; }
+    .hero-stat-pill {
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid var(--border-color);
+      padding: 0.85rem 1.25rem;
+      border-radius: var(--radius-sm);
+    }
+    .hero-stat-num { font-size: 1.35rem; font-weight: 800; color: #ffffff; display: block; }
+    .hero-stat-lbl { font-size: 0.75rem; color: var(--text-dim); }
+
+    .hero-live-ticker {
+      font-size: 0.825rem;
+      color: var(--text-muted);
+      border-top: 1px solid var(--border-color);
+      padding-top: 1.25rem;
+      z-index: 2;
+    }
+
+    .auth-form-panel {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: 4rem;
+      max-width: 540px;
+      margin: 0 auto;
+      width: 100%;
+    }
+
+    .role-switch-container {
+      display: flex;
+      background: var(--bg-surface);
+      padding: 4px;
+      border-radius: var(--radius-sm);
+      border: 1px solid var(--border-color);
+      margin-bottom: 1.5rem;
+    }
+
+    .role-switch-btn {
+      flex: 1;
+      padding: 0.6rem;
+      border: none;
+      background: transparent;
+      color: var(--text-muted);
+      font-weight: 600;
+      font-size: 0.85rem;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: var(--transition);
+    }
+
+    .role-switch-btn.active {
+      background: var(--bg-glass-card);
+      color: var(--text-main);
+      box-shadow: var(--shadow-sm);
+    }
+
+    .auth-tab-buttons {
+      display: flex;
+      gap: 1rem;
+      border-bottom: 1px solid var(--border-color);
+      margin-bottom: 1.5rem;
+    }
+
+    .auth-tab-btn {
+      padding: 0.5rem 0.25rem;
+      background: transparent;
+      border: none;
+      border-bottom: 2px solid transparent;
+      color: var(--text-muted);
+      font-weight: 600;
+      font-size: 0.9rem;
+      cursor: pointer;
+    }
+
+    .auth-tab-btn.active {
+      color: var(--primary);
+      border-bottom-color: var(--primary);
+    }
+
+    /* Dashboard Shell & Nav */
+    .dashboard-layout {
+      display: grid;
+      grid-template-columns: 260px 1fr;
+      grid-template-rows: 70px 1fr;
+      min-height: 100vh;
+      background: var(--bg-base);
+    }
+
+    .navbar {
+      grid-column: 1 / -1;
+      background: var(--bg-glass);
+      backdrop-filter: var(--backdrop-blur);
+      border-bottom: 1px solid var(--border-color);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 1.75rem;
+      z-index: 100;
+      position: sticky;
+      top: 0;
+    }
+
+    .sidebar {
+      background: var(--bg-glass);
+      border-right: 1px solid var(--border-color);
+      padding: 1.5rem 1rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.35rem;
+    }
+
+    .nav-item {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      padding: 0.75rem 1rem;
+      border-radius: var(--radius-sm);
+      color: var(--text-muted);
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 0.875rem;
+      transition: var(--transition);
+    }
+
+    .nav-item:hover {
+      background: rgba(255, 255, 255, 0.04);
+      color: var(--text-main);
+    }
+
+    .nav-item.active {
+      background: var(--primary-glow);
+      color: var(--primary);
+      border: 1px solid rgba(16, 185, 129, 0.2);
+    }
+
+    .nav-item.admin-active.active {
+      background: rgba(99, 102, 241, 0.15);
+      color: var(--accent-indigo);
+      border: 1px solid rgba(99, 102, 241, 0.3);
+    }
+
+    .main-content {
+      padding: 2rem;
+      overflow-y: auto;
+    }
+
+    .tab-content {
+      display: none;
+      animation: fadeIn 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .tab-content.active { display: block; }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(6px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .content-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 1.75rem;
+    }
+
+    .content-header-title h1 { font-size: 1.8rem; line-height: 1.2; }
+    .content-header-title p { color: var(--text-muted); font-size: 0.875rem; margin-top: 0.2rem; }
+
+    .user-profile-btn {
+      display: flex;
+      align-items: center;
+      gap: 0.65rem;
+      padding: 0.35rem 0.75rem;
+      background: var(--bg-surface);
+      border: 1px solid var(--border-color);
+      border-radius: 30px;
+    }
+
+    .avatar-circle {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #10b981, #059669);
+      color: #fff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 700;
+      font-size: 0.8rem;
+    }
+
+    /* Notification Popover */
+    .notif-popover {
+      display: none;
+      position: absolute;
+      top: 55px;
+      right: 180px;
+      width: 300px;
+      background: var(--bg-surface);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-sm);
+      padding: 1rem;
+      box-shadow: var(--shadow-lg);
+      z-index: 200;
+    }
+
+    .notif-popover.show { display: block; }
+    .notif-item { padding: 0.6rem 0; border-bottom: 1px solid var(--border-color); font-size: 0.8rem; }
+    .notif-item:last-child { border-bottom: none; }
+
+    /* Custom Data Tables */
+    .custom-table-container { overflow-x: auto; }
+    .custom-table {
+      width: 100%;
+      border-collapse: collapse;
+      text-align: left;
+      font-size: 0.875rem;
+    }
+
+    .custom-table th {
+      padding: 0.85rem 1rem;
+      color: var(--text-dim);
+      font-weight: 700;
+      text-transform: uppercase;
+      font-size: 0.725rem;
+      border-bottom: 1px solid var(--border-color);
+    }
+
+    .custom-table td {
+      padding: 1rem;
+      border-bottom: 1px solid var(--border-color);
+      color: var(--text-main);
+    }
+
+    .custom-table tr:hover td { background: rgba(255, 255, 255, 0.02); }
+
+    /* Stat Cards */
+    .stat-card {
+      padding: 1.35rem;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    .stat-value { font-size: 1.8rem; font-weight: 800; margin: 0.5rem 0 0.2rem 0; font-family: 'Outfit'; }
+    .stat-trend { font-size: 0.75rem; color: var(--text-dim); font-weight: 600; }
+    .stat-trend.up { color: #34d399; }
+
+    /* Progress Tracker Steps */
+    .progress-tracker { display: flex; justify-content: space-between; margin: 1.25rem 0; position: relative; }
+    .progress-tracker::before { content: ''; position: absolute; top: 50%; left: 0; right: 0; height: 2px; background: var(--border-color); z-index: 1; transform: translateY(-50%); }
+    .progress-step { width: 28px; height: 28px; border-radius: 50%; background: var(--bg-surface); border: 2px solid var(--border-color); display: flex; align-items: center; justify-content: center; font-size: 0.75rem; font-weight: 700; color: var(--text-dim); z-index: 2; position: relative; }
+    .progress-step.completed { background: var(--primary); border-color: var(--primary); color: #fff; }
+
+    /* AI Scanner Area */
+    .scanner-box {
+      border: 2px dashed var(--border-color);
+      border-radius: var(--radius-md);
+      padding: 2.5rem;
+      text-align: center;
+      background: rgba(10, 15, 26, 0.4);
+      position: relative;
+      overflow: hidden;
+      cursor: pointer;
+      transition: var(--transition);
+    }
+
+    .scanner-box:hover { border-color: var(--primary); background: rgba(16, 185, 129, 0.03); }
+    .scanner-line { position: absolute; top: 0; left: 0; right: 0; height: 3px; background: linear-gradient(90deg, transparent, var(--primary), transparent); display: none; }
+    .scanner-box.scanning .scanner-line { display: block; animation: scanAnim 2s infinite ease-in-out; }
+
+    @keyframes scanAnim {
+      0% { top: 0; }
+      50% { top: 100%; }
+      100% { top: 0; }
+    }
+
+    /* Fabric Grid Selection */
+    .fabric-types-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 0.5rem; }
+    .fabric-type-box {
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-sm);
+      padding: 0.75rem 0.5rem;
+      text-align: center;
+      cursor: pointer;
+      background: var(--bg-surface);
+      transition: var(--transition);
+    }
+    .fabric-type-box.selected, .fabric-type-box:hover { border-color: var(--primary); background: var(--primary-glow); }
+
+    /* Product Cards */
+    .product-card {
+      background: var(--bg-glass-card);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-md);
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .product-img { width: 100%; height: 160px; object-fit: cover; background: #182232; display: flex; align-items: center; justify-content: center; font-size: 3.5rem; }
+    .product-body { padding: 1.25rem; flex: 1; display: flex; flex-direction: column; justify-content: space-between; }
+
+    /* Interactive Map Canvas Container */
+    .gis-map-canvas {
+      width: 100%;
+      height: 240px;
+      background: #090d16;
+      border-radius: var(--radius-sm);
+      border: 1px solid var(--border-color);
+      position: relative;
+      overflow: hidden;
+    }
+
+    /* Modals & Toasts */
+    .modal-overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.75);
+      backdrop-filter: blur(8px);
+      z-index: 1000;
+      align-items: center;
+      justify-content: center;
+      padding: 1rem;
+    }
+
+    .modal-overlay.show { display: flex; }
+    .modal-card {
+      background: var(--bg-surface);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-md);
+      padding: 2rem;
+      max-width: 580px;
+      width: 100%;
+      box-shadow: var(--shadow-lg);
+    }
+
+    .toast-container {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      z-index: 2000;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .toast {
+      background: var(--bg-surface);
+      border: 1px solid var(--border-color);
+      border-left: 4px solid var(--primary);
+      padding: 0.85rem 1.25rem;
+      border-radius: var(--radius-sm);
+      color: var(--text-main);
+      font-size: 0.875rem;
+      box-shadow: var(--shadow-lg);
+      animation: slideIn 0.3s ease;
+    }
+
+    @keyframes slideIn {
+      from { transform: translateX(100%); opacity: 0; }
+      to { transform: translateX(0); opacity: 1; }
+    }
+
+    @media (max-width: 1024px) {
+      .auth-wrapper { grid-template-columns: 1fr; }
+      .auth-hero-panel { display: none; }
+      .dashboard-layout { grid-template-columns: 1fr; }
+      .sidebar { display: none; }
+      .grid-2, .grid-3, .grid-4 { grid-template-columns: 1fr; }
+      .fabric-types-grid { grid-template-columns: repeat(3, 1fr); }
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- ==========================================================================
+       SECTION 1: AUTHENTICATION WRAPPER
+       ========================================================================== -->
+  <div class="auth-wrapper" id="authWrapper">
+    <!-- LEFT HERO PANEL -->
+    <div class="auth-hero-panel">
+      <div class="hero-orb hero-orb-1"></div>
+      <div class="hero-orb hero-orb-2"></div>
+
+      <div style="z-index: 2;">
+        <div style="display: flex; align-items: center; gap: 0.75rem; margin-bottom: 2rem;">
+          <div style="width: 42px; height: 42px; border-radius: var(--radius-sm); background: linear-gradient(135deg, #10b981, #059669); display: flex; align-items: center; justify-content: center; font-size: 1.35rem;">♻️</div>
+          <span style="font-family: Outfit; font-weight: 800; font-size: 1.6rem; color: #fff;">Sanjay<span class="text-gradient">Textiles</span></span>
+        </div>
+
+        <div class="hero-slogan-block">
+          <span class="badge badge-emerald" style="margin-bottom: 1rem;">♻️ Circular Economy Leader</span>
+          <h1 class="hero-slogan-title">Weaving a <span class="text-gradient">Greener Tomorrow</span>,<br />One Thread at a Time</h1>
+          <p class="hero-slogan-sub">India's most advanced textile waste management & recycling platform — turning waste into wealth, fabrics into futures.</p>
+
+          <div class="hero-stats-row">
+            <div class="hero-stat-pill">
+              <span class="hero-stat-num">58.4 T</span>
+              <span class="hero-stat-lbl">Waste Diverted</span>
+            </div>
+            <div class="hero-stat-pill">
+              <span class="hero-stat-num">12</span>
+              <span class="hero-stat-lbl">Active Hubs</span>
+            </div>
+            <div class="hero-stat-pill">
+              <span class="hero-stat-num">1,420</span>
+              <span class="hero-stat-lbl">Recycling Partners</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="hero-live-ticker">
+        🌐 <strong>Live Status:</strong> 58,420 kg Textile Waste Diverted Across Tiruppur & Coimbatore Hubs This Month!
+      </div>
+    </div>
+
+    <!-- RIGHT FORM PANEL -->
+    <div class="auth-form-panel">
+      <div class="role-switch-container">
+        <button type="button" class="role-switch-btn active" id="roleBtnUser" onclick="switchPortal('user')">👤 User Portal</button>
+        <button type="button" class="role-switch-btn" id="roleBtnAdmin" onclick="switchPortal('admin')">🛡️ Admin Portal</button>
+      </div>
+
+      <h2 style="font-size: 1.6rem; margin-bottom: 0.25rem;" id="authPortalTitle">Welcome Back!</h2>
+      <p style="color: var(--text-muted); font-size: 0.875rem; margin-bottom: 1.5rem;" id="authPortalSubtitle">Sign in to your sustainability dashboard</p>
+
+      <div class="auth-tab-buttons" id="authTabButtons">
+        <button type="button" class="auth-tab-btn active" id="tabBtnLogin" onclick="switchAuthTab('login')">Sign In</button>
+        <button type="button" class="auth-tab-btn" id="tabBtnSignup" onclick="switchAuthTab('signup')">Create Account</button>
+      </div>
+
+      <!-- LOGIN FORM -->
+      <div id="loginFormContainer">
+        <form onsubmit="handleLogin(event)">
+          <div class="form-group">
+            <label class="form-label" for="loginEmail">Email Address</label>
+            <input type="email" id="loginEmail" class="form-control" placeholder="user@sanjaytextiles.com" value="sophia@example.com" required />
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="loginPassword">Password</label>
+            <input type="password" id="loginPassword" class="form-control" placeholder="••••••••" value="password123" required />
+          </div>
+
+          <button type="submit" class="btn btn-primary" style="width: 100%; font-size: 1rem; margin-top: 0.5rem;">
+            Sign In to Dashboard →
+          </button>
+        </form>
+
+        <div style="margin-top: 1.5rem; padding: 1rem; background: var(--bg-surface); border: 1px dashed var(--border-color); border-radius: var(--radius-sm);">
+          <div style="font-size: 0.75rem; font-weight: 700; color: var(--text-dim); text-transform: uppercase; margin-bottom: 0.5rem;">⚡ 1-Click Demo Fill</div>
+          <div style="display: flex; gap: 0.5rem;">
+            <button type="button" class="btn btn-outline btn-sm" onclick="quickFill('user')">👤 Demo User (Sophia)</button>
+            <button type="button" class="btn btn-indigo btn-sm" onclick="quickFill('admin')">🛡 Demo Admin (Dr. Elena)</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- SIGNUP FORM -->
+      <div id="signupFormContainer" style="display: none;">
+        <form onsubmit="handleSignup(event)">
+          <div class="form-group">
+            <label class="form-label">Full Name / Business Name</label>
+            <input type="text" class="form-control" placeholder="Sophia Carter" required />
+          </div>
+          <div class="form-group">
+            <label class="form-label">Email Address</label>
+            <input type="email" class="form-control" placeholder="sophia@example.com" required />
+          </div>
+          <div class="form-group">
+            <label class="form-label">Account Role Type</label>
+            <select class="form-control form-select">
+              <option>Individual Household Donor</option>
+              <option>Tailor Boutique / Garment Business</option>
+              <option>Textile Recycler / Collector Partner</option>
+              <option>NGO Charity Partner</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Create Password</label>
+            <input type="password" class="form-control" placeholder="At least 6 characters" required />
+          </div>
+          <button type="submit" class="btn btn-primary" style="width: 100%; font-size: 1rem; margin-top: 0.5rem;">
+            🎁 Register & Claim 100 Bonus Pts
+          </button>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- ==========================================================================
+       SECTION 2: USER DASHBOARD LAYOUT
+       ========================================================================== -->
+  <div class="dashboard-layout" id="userDashboardLayout" style="display: none;">
+    <!-- Navbar -->
+    <header class="navbar">
+      <div style="display: flex; align-items: center; gap: 1rem;">
+        <a href="#" class="nav-logo" style="text-decoration: none; font-family: Outfit; font-weight: 800; font-size: 1.3rem; color: #fff;">
+          ♻️ Sanjay<span class="text-gradient">Textiles</span>
+        </a>
+        <span class="badge badge-emerald">User Portal</span>
+      </div>
+
+      <div style="display: flex; align-items: center; gap: 0.85rem;">
+        <button type="button" class="btn btn-outline btn-sm" onclick="toggleTheme()">🌗 Theme</button>
+        <button type="button" class="btn btn-outline btn-sm" onclick="toggleNotifPopover()" style="position: relative;">
+          🔔 <span style="position: absolute; top:-2px; right:-2px; width: 8px; height: 8px; background: var(--primary); border-radius: 50%;"></span>
+        </button>
+
+        <!-- Notification Popover -->
+        <div class="notif-popover" id="userNotifPopover">
+          <div style="font-weight: 700; font-size: 0.85rem; margin-bottom: 0.5rem;">Notifications</div>
+          <div class="notif-item">
+            <strong>🚚 Pickup Approved (#PK-1089)</strong><br />
+            <span style="color: var(--text-muted);">Collector dispatched for Oct 06</span>
+          </div>
+          <div class="notif-item">
+            <strong>🎁 Welcome Bonus Credited</strong><br />
+            <span style="color: var(--text-muted);">+100 Eco Points added to wallet</span>
+          </div>
+        </div>
+
+        <div class="badge badge-gold">🌱 <span id="userCarbonDisplay">14.2 SEC</span></div>
+        <div class="badge badge-emerald">⭐ <span id="userPointsDisplay">1,280 Pts</span></div>
+
+        <div class="user-profile-btn">
+          <div class="avatar-circle">SC</div>
+          <div style="line-height: 1.1;">
+            <div style="font-weight: 700; font-size: 0.8rem;" id="userNameNav">Sophia Carter</div>
+            <div style="font-size: 0.68rem; color: var(--primary);">Gold Eco Champion</div>
+          </div>
+        </div>
+
+        <button class="btn btn-outline btn-sm" onclick="logout()">Logout 🚪</button>
+      </div>
+    </header>
+
+    <!-- Sidebar Navigation -->
+    <aside class="sidebar">
+      <a href="#" class="nav-item active" onclick="switchUserTab(event, 'tabUserOverview')">📊 Overview & Impact</a>
+      <a href="#" class="nav-item" onclick="switchUserTab(event, 'tabUserSchedule')">🚚 Schedule Pickup</a>
+      <a href="#" class="nav-item" onclick="switchUserTab(event, 'tabUserScanner')">🧠 AI Fabric Scanner</a>
+      <a href="#" class="nav-item" onclick="switchUserTab(event, 'tabUserValuation')">💵 Fiber Price Calculator</a>
+      <a href="#" class="nav-item" onclick="switchUserTab(event, 'tabUserLeaderboard')">🏆 Leaderboard</a>
+      <a href="#" class="nav-item" onclick="switchUserTab(event, 'tabUserCarbon')">🌱 Carbon Credits</a>
+      <a href="#" class="nav-item" onclick="switchUserTab(event, 'tabUserMarket')">🛍️ Upcycled Marketplace</a>
+      <a href="#" class="nav-item" onclick="switchUserTab(event, 'tabUserHubs')">📍 Drop-off Locations</a>
+    </aside>
+
+    <!-- Main Content Area -->
+    <main class="main-content">
+
+      <!-- TAB 1: OVERVIEW & IMPACT METRICS -->
+      <section class="tab-content active" id="tabUserOverview">
+        <div class="content-header">
+          <div class="content-header-title">
+            <h1>Sanjay Textiles <span class="text-gradient">Impact Dashboard</span></h1>
+            <p>Track your environmental contribution, eco reward points, and textile waste history.</p>
+          </div>
+          <button class="btn btn-primary" onclick="triggerNavTab('tabUserSchedule')">+ Schedule New Pickup</button>
+        </div>
+
+        <!-- 4 KPI Stat Cards -->
+        <div class="grid-4" style="margin-bottom: 1.5rem;">
+          <div class="glass-panel stat-card">
+            <span style="font-size: 0.8rem; color: var(--text-muted); font-weight: 600;">Total Waste Diverted</span>
+            <div class="stat-value text-gradient" id="statWasteVal">142.5 kg</div>
+            <div class="stat-trend up">↑ +24.5 kg this month</div>
+          </div>
+
+          <div class="glass-panel stat-card">
+            <span style="font-size: 0.8rem; color: var(--text-muted); font-weight: 600;">CO₂ Emissions Saved</span>
+            <div class="stat-value text-gradient-indigo" id="statCo2Val">385.0 kg</div>
+            <div class="stat-trend up">Equivalent to 15 trees 🌳</div>
+          </div>
+
+          <div class="glass-panel stat-card">
+            <span style="font-size: 0.8rem; color: var(--text-muted); font-weight: 600;">Water Conserved</span>
+            <div class="stat-value" style="color: var(--accent-cyan);" id="statWaterVal">1,420 L</div>
+            <div class="stat-trend up">Clean drinking water saved</div>
+          </div>
+
+          <div class="glass-panel stat-card">
+            <span style="font-size: 0.8rem; color: var(--text-muted); font-weight: 600;">Eco Reward Points</span>
+            <div class="stat-value text-gradient-gold" id="statPointsVal">1,280 Pts</div>
+            <div class="stat-trend up">Gold Eco Champion Level 🏆</div>
+          </div>
+        </div>
+
+        <!-- Streak & Equivalents Widget -->
+        <div class="grid-2" style="margin-bottom: 1.5rem;">
+          <div class="glass-panel" style="padding: 1.25rem; display: flex; align-items: center; justify-content: space-between;">
+            <div>
+              <span class="badge badge-gold">Active Eco Habit Streak</span>
+              <h3 style="font-size: 1.2rem; margin-top: 0.3rem;">🔥 14-Day Recycling Streak!</h3>
+              <p style="font-size: 0.825rem; color: var(--text-muted);">Weekly recycling doubles your carbon credit multiplier.</p>
+            </div>
+            <div style="font-size: 2.2rem; font-weight: 800; color: var(--accent-amber);">2.0x</div>
+          </div>
+
+          <div class="glass-panel" style="padding: 1.25rem; display: flex; align-items: center; justify-content: space-between;">
+            <div>
+              <span class="badge badge-emerald">Environmental Equivalents</span>
+              <h3 style="font-size: 1.2rem; margin-top: 0.3rem;" id="dashEquivPools">🏊 2.8 Swimming Pools Saved</h3>
+              <p style="font-size: 0.825rem; color: var(--text-muted);">Equivalent to taking 1 car off the road for 4 months.</p>
+            </div>
+            <div style="font-size: 2.2rem;">🚗💨</div>
+          </div>
+        </div>
+
+        <!-- Chart & Active Progress Step -->
+        <div class="grid-2" style="margin-bottom: 1.5rem;">
+          <div class="glass-panel" style="padding: 1.5rem;">
+            <h3 style="margin-bottom: 1rem; font-size: 1rem;">🎨 Fabric Composition Recycled</h3>
+            <div style="height: 220px; position: relative;">
+              <canvas id="userFabricChart"></canvas>
+            </div>
+          </div>
+
+          <div class="glass-panel" style="padding: 1.5rem; display: flex; flex-direction: column; justify-content: space-between;">
+            <div>
+              <span class="badge badge-emerald" style="margin-bottom: 0.5rem;">Next Pickup Scheduled</span>
+              <h3 style="font-size: 1.2rem; margin-bottom: 0.25rem;" id="dashNextPickupTitle">🚚 Request PK-1089 (Denim & Cotton)</h3>
+              <p style="color: var(--text-muted); font-size: 0.85rem; margin-bottom: 1rem;">Scheduled for <strong>Oct 06, 2026 (Morning Slot)</strong></p>
+
+              <div class="progress-tracker">
+                <div class="progress-step completed" title="Submitted">1</div>
+                <div class="progress-step completed" title="Dispatched">2</div>
+                <div class="progress-step" title="Sorting">3</div>
+                <div class="progress-step" title="Recycled">4</div>
+              </div>
+
+              <div style="padding: 0.85rem; background: rgba(16, 185, 129, 0.1); border-radius: var(--radius-sm); border: 1px solid rgba(16, 185, 129, 0.2);">
+                <div style="font-size: 0.75rem; font-weight: 700; color: var(--primary);">Estimated Reward</div>
+                <div style="font-weight: 800; font-size: 1rem;" id="dashNextPickupReward">+245 Eco Points & 66.1 kg CO₂ Saved</div>
+              </div>
+            </div>
+            <button class="btn btn-outline" style="width: 100%; margin-top: 1rem;" onclick="openQrModal('PK-1089')">📱 View Digital Shipping Tag QR</button>
+          </div>
+        </div>
+
+        <!-- Recent Pickup History -->
+        <div class="glass-panel" style="padding: 1.5rem;">
+          <h3 style="margin-bottom: 1rem; font-size: 1rem;">📋 My Pickup & Recycling History</h3>
+          <div class="custom-table-container">
+            <table class="custom-table">
+              <thead>
+                <tr>
+                  <th>Request ID</th>
+                  <th>Fabric Details</th>
+                  <th>Weight</th>
+                  <th>Status</th>
+                  <th>Points Earned</th>
+                  <th>Actions</th>
+                </tr>
+              </thead>
+              <tbody id="userPickupsTableBody">
+                <!-- Dynamically Populated by JS -->
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      <!-- TAB 2: SCHEDULE WASTE PICKUP WIZARD -->
+      <section class="tab-content" id="tabUserSchedule">
+        <div class="content-header">
+          <div class="content-header-title">
+            <h1>Schedule <span class="text-gradient">Textile Waste Pickup</span></h1>
+            <p>Donate or recycle garments, boutique scraps, or factory offcuts effortlessly.</p>
+          </div>
+        </div>
+
+        <div class="grid-2">
+          <div class="glass-panel" style="padding: 1.75rem;">
+            <form onsubmit="handlePickupSubmit(event)">
+              <div class="form-group">
+                <label class="form-label">1. Select Fabric Category</label>
+                <div class="fabric-types-grid">
+                  <div class="fabric-type-box selected" onclick="selectFabric(this, 'cotton')">
+                    <span style="font-size: 1.3rem; display: block;">👕</span>
+                    <span style="font-size: 0.75rem; font-weight: 600;">Cotton</span>
+                  </div>
+                  <div class="fabric-type-box" onclick="selectFabric(this, 'denim')">
+                    <span style="font-size: 1.3rem; display: block;">👖</span>
+                    <span style="font-size: 0.75rem; font-weight: 600;">Denim</span>
+                  </div>
+                  <div class="fabric-type-box" onclick="selectFabric(this, 'polyester')">
+                    <span style="font-size: 1.3rem; display: block;">🎽</span>
+                    <span style="font-size: 0.75rem; font-weight: 600;">Polyester</span>
+                  </div>
+                  <div class="fabric-type-box" onclick="selectFabric(this, 'silk')">
+                    <span style="font-size: 1.3rem; display: block;">👗</span>
+                    <span style="font-size: 0.75rem; font-weight: 600;">Silk/Wool</span>
+                  </div>
+                  <div class="fabric-type-box" onclick="selectFabric(this, 'scraps')">
+                    <span style="font-size: 1.3rem; display: block;">✂️</span>
+                    <span style="font-size: 0.75rem; font-weight: 600;">Scraps</span>
+                  </div>
+                </div>
+              </div>
+
+              <div class="grid-2">
+                <div class="form-group">
+                  <label class="form-label">Total Weight (kg)</label>
+                  <input type="number" step="0.5" id="pickupWeightInput" class="form-control" value="15" oninput="calcReward()" required />
+                </div>
+                <div class="form-group">
+                  <label class="form-label">Garment Condition</label>
+                  <select class="form-control form-select">
+                    <option>Pre-loved Usable Clothing</option>
+                    <option>Minor Wear / Pre-loved</option>
+                    <option>Worn Out / Torn Scraps</option>
+                    <option>Factory Offcuts</option>
+                  </select>
+                </div>
+              </div>
+
+              <div class="grid-2">
+                <div class="form-group">
+                  <label class="form-label">Service Type</label>
+                  <select class="form-control form-select">
+                    <option>Doorstep Home Pickup</option>
+                    <option>Self Drop-off at Hub</option>
+                    <option>Bulk Logistics Freight</option>
+                  </select>
+                </div>
+                <div class="form-group">
+                  <label class="form-label">Preferred Date</label>
+                  <input type="date" class="form-control" value="2026-10-08" required />
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label class="form-label">Pickup Address</label>
+                <textarea class="form-control" rows="2" required>742 Evergreen Terrace, Sector 4, Hub City</textarea>
+              </div>
+
+              <button type="submit" class="btn btn-primary" style="width: 100%; font-size: 1rem;">
+                🚀 Confirm & Submit Request
+              </button>
+            </form>
+          </div>
+
+          <div class="glass-panel" style="padding: 1.75rem; display: flex; flex-direction: column; justify-content: space-between;">
+            <div>
+              <span class="badge badge-emerald" style="margin-bottom: 0.75rem;">Real-time Calculation</span>
+              <h3 style="font-size: 1.25rem; margin-bottom: 0.5rem;">📊 Estimated Eco Reward Summary</h3>
+
+              <div style="padding: 1.25rem; background: rgba(16, 185, 129, 0.1); border: 1px solid rgba(16, 185, 129, 0.25); border-radius: var(--radius-sm); margin: 1rem 0;">
+                <div style="font-size: 0.75rem; color: var(--primary); font-weight: 700; text-transform: uppercase;">Earned Reward Balance</div>
+                <div style="font-size: 2rem; font-weight: 800;" id="calcPoints">+150 Eco Pts</div>
+                <div style="font-size: 0.9rem; color: var(--accent-cyan); font-weight: 700; margin-top: 0.25rem;" id="calcCo2">40.5 kg CO₂ Offset</div>
+              </div>
+
+              <div style="padding: 0.85rem; background: var(--bg-surface); border-radius: 8px; border: 1px solid var(--border-color); font-size: 0.8rem; color: var(--text-muted);">
+                <strong>📦 Processing Roadmap:</strong><br />
+                1. Request Submitted → 2. QR Tag Auto-Generated → 3. Driver Picked Up → 4. Carded & Recycled into Yarn
+              </div>
+            </div>
+
+            <div style="font-size: 0.8rem; color: var(--text-muted);">
+              🛡️ Free doorstep pickup on orders above 10kg. Sealed eco bags provided upon driver arrival.
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- TAB 3: AI FABRIC CLASSIFIER & QUALITY SCANNER -->
+      <section class="tab-content" id="tabUserScanner">
+        <div class="content-header">
+          <div class="content-header-title">
+            <h1>AI Fabric Recognition & <span class="text-gradient">Quality Scanner</span></h1>
+            <p>Neural vision analysis to detect textile fiber composition and recycling compatibility.</p>
+          </div>
+        </div>
+
+        <div class="grid-2">
+          <div class="glass-panel" style="padding: 2rem;">
+            <h3 style="margin-bottom: 1rem; font-size: 1.1rem;">📷 Fabric Sample Scanner</h3>
+            <div class="scanner-box" id="aiScannerBox" onclick="runAiScan('Denim Twill')">
+              <div class="scanner-line"></div>
+              <canvas id="scannerCanvas" width="300" height="120" style="width:100%; height:120px; border-radius:8px; margin-bottom:0.5rem; background: rgba(0,0,0,0.3);"></canvas>
+              <h4 style="font-size: 1rem; margin-bottom: 0.25rem;">Click to Upload or Scan Fabric Image</h4>
+              <p style="font-size: 0.8rem; color: var(--text-muted);">Simulate computer vision fiber recognition</p>
+            </div>
+
+            <div style="margin-top: 1.5rem;">
+              <span class="form-label">Or Pick Test Presets:</span>
+              <div style="display: flex; gap: 0.5rem; margin-top: 0.5rem; flex-wrap: wrap;">
+                <button type="button" class="btn btn-outline btn-sm" onclick="runAiScan('Organic Cotton')">👕 Cotton</button>
+                <button type="button" class="btn btn-outline btn-sm" onclick="runAiScan('Denim Twill')">👖 Denim</button>
+                <button type="button" class="btn btn-outline btn-sm" onclick="runAiScan('Polyester Blend')">🎽 Polyester</button>
+                <button type="button" class="btn btn-outline btn-sm" onclick="runAiScan('Pure Silk')">👗 Silk</button>
+              </div>
+            </div>
+          </div>
+
+          <div class="glass-panel" style="padding: 2rem;">
+            <span class="badge badge-indigo" style="margin-bottom: 1rem;">Vision AI v3.2</span>
+            <h3 style="margin-bottom: 1rem; font-size: 1.1rem;">🧠 Neural Classification Output</h3>
+
+            <div id="aiResultBox" style="display: none;">
+              <h2 style="font-size: 1.5rem; color: var(--primary); margin-bottom: 0.75rem;" id="aiResultTitle">Denim Twill Sample</h2>
+
+              <div style="padding: 0.85rem; background: var(--bg-surface); border-radius: var(--radius-sm); border: 1px solid var(--border-color); margin-bottom: 0.75rem;">
+                <div style="font-size: 0.75rem; color: var(--text-muted);">Detected Fiber Composition</div>
+                <div style="font-weight: 700; font-size: 1rem;" id="aiResultComp">98% Organic Cotton, 2% Elastane</div>
+              </div>
+
+              <div style="padding: 0.85rem; background: var(--bg-surface); border-radius: var(--radius-sm); border: 1px solid var(--border-color); margin-bottom: 0.75rem;">
+                <div style="font-size: 0.75rem; color: var(--text-muted);">Recyclability Index</div>
+                <div style="font-weight: 700; font-size: 1rem; color: var(--accent-cyan);" id="aiResultScore">94% High Recyclability</div>
+              </div>
+
+              <div style="padding: 0.85rem; background: var(--bg-surface); border-radius: var(--radius-sm); border: 1px solid var(--border-color); margin-bottom: 1rem;">
+                <div style="font-size: 0.75rem; color: var(--text-muted);">Recommended Stream & Market Value</div>
+                <div style="font-weight: 700; font-size: 0.95rem;" id="aiResultRec">Upcycle to Canvas Bags (₹120 / kg)</div>
+              </div>
+
+              <button class="btn btn-primary" style="width: 100%;" onclick="triggerNavTab('tabUserSchedule')">Schedule Pickup for Sample →</button>
+            </div>
+
+            <div id="aiPlaceholder" style="color: var(--text-muted); font-size: 0.875rem;">
+              Click scan or pick a sample preset on the left to view composition analysis.
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ADVANCED FEATURE TAB: FIBER PRICE & QUOTATION CALCULATOR -->
+      <section class="tab-content" id="tabUserValuation">
+        <div class="content-header">
+          <div class="content-header-title">
+            <h1>Dynamic Fiber <span class="text-gradient">Scrap Price Calculator</span></h1>
+            <p>Get real-time spot market valuations (₹/kg) based on material purity, moisture, and contamination.</p>
+          </div>
+        </div>
+
+        <div class="grid-2">
+          <div class="glass-panel" style="padding: 1.75rem;">
+            <h3 style="margin-bottom: 1rem;">⚙️ Scrap Batch Parameters</h3>
+            <div class="form-group">
+              <label class="form-label">Primary Textile Material</label>
+              <select id="calcMaterialSelect" class="form-control form-select" onchange="computeFiberValuation()">
+                <option value="45">Combed Organic Cotton (Base ₹45/kg)</option>
+                <option value="38">Denim Twill Offcuts (Base ₹38/kg)</option>
+                <option value="28">PET Polyester Filament (Base ₹28/kg)</option>
+                <option value="120">Mulberry Silk Offcuts (Base ₹120/kg)</option>
+                <option value="20">Mixed Synthetic Shreds (Base ₹20/kg)</option>
+              </select>
+            </div>
+
+            <div class="grid-2">
+              <div class="form-group">
+                <label class="form-label">Batch Weight (kg)</label>
+                <input type="number" id="calcWeightKg" class="form-control" value="100" oninput="computeFiberValuation()" />
+              </div>
+              <div class="form-group">
+                <label class="form-label">Fiber Sorting Grade</label>
+                <select id="calcGradeSelect" class="form-control form-select" onchange="computeFiberValuation()">
+                  <option value="1.2">Grade A+ (Single Fiber Clean)</option>
+                  <option value="1.0" selected>Grade A (Sorted Trim)</option>
+                  <option value="0.8">Grade B (Mixed Colors)</option>
+                  <option value="0.5">Grade C (Unsorted Trash)</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label">Wet Moisture Content (%)</label>
+              <input type="range" id="calcMoistureRange" min="0" max="30" value="5" style="width:100%; accent-color: var(--primary);" oninput="computeFiberValuation()" />
+              <div style="display:flex; justify-content:space-between; font-size:0.75rem; color: var(--text-muted);">
+                <span>0% Dry</span><span id="calcMoistureVal">5% Moisture</span><span>30% Wet</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="glass-panel" style="padding: 1.75rem; display:flex; flex-direction:column; justify-content:space-between;">
+            <div>
+              <span class="badge badge-gold" style="margin-bottom: 0.75rem;">Spot Market Rate</span>
+              <h3>💰 Estimated Batch Scrap Value</h3>
+
+              <div style="padding: 1.5rem; background: rgba(245, 158, 11, 0.1); border: 1px solid rgba(245, 158, 11, 0.3); border-radius: var(--radius-sm); margin: 1.25rem 0; text-align:center;">
+                <div style="font-size: 0.8rem; color: var(--accent-amber); font-weight: 700;">TOTAL PAYOUT QUOTE</div>
+                <div style="font-size: 2.5rem; font-weight: 800; color: #fff;" id="quoteTotalVal">₹ 4,320</div>
+                <div style="font-size: 0.85rem; color: var(--text-muted);" id="quotePerKg">₹ 43.20 per kg</div>
+              </div>
+
+              <div style="font-size: 0.825rem; color: var(--text-muted); line-height: 1.6;">
+                • Market prices sync with Tiruppur Yarn Spot Exchange.<br />
+                • Moisture level exceeding 12% incurs drying penalties.<br />
+                • Digital wallet payout within 24 hours of hub arrival.
+              </div>
+            </div>
+
+            <button class="btn btn-gold" style="width:100%; font-size:1rem; margin-top:1rem;" onclick="showToast('Instant quote saved! Valid for 48 hours.')">
+              📋 Lock In Price Quote
+            </button>
+          </div>
+        </div>
+      </section>
+
+      <!-- TAB 4: COMMUNITY LEADERBOARD -->
+      <section class="tab-content" id="tabUserLeaderboard">
+        <div class="content-header">
+          <div class="content-header-title">
+            <h1>Community <span class="text-gradient-gold">Eco Leaderboard</span></h1>
+            <p>Celebrating top donors, tailoring boutiques, and NGOs diverting textile waste from landfills.</p>
+          </div>
+          <div style="display: flex; gap: 0.5rem;">
+            <button class="btn btn-outline btn-sm" onclick="filterLeaderboard('all')">All</button>
+            <button class="btn btn-outline btn-sm" onclick="filterLeaderboard('individual')">Individuals</button>
+            <button class="btn btn-outline btn-sm" onclick="filterLeaderboard('boutique')">Boutiques</button>
+          </div>
+        </div>
+
+        <div class="glass-panel" style="padding: 1.5rem;">
+          <div class="custom-table-container">
+            <table class="custom-table">
+              <thead>
+                <tr>
+                  <th>Rank</th>
+                  <th>Donor / Organization</th>
+                  <th>Category</th>
+                  <th>Total Waste Diverted</th>
+                  <th>Points Balance</th>
+                </tr>
+              </thead>
+              <tbody id="leaderboardTableBody">
+                <!-- Dynamically Populated by JS -->
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      <!-- TAB 5: CARBON CREDITS & EXCHANGE -->
+      <section class="tab-content" id="tabUserCarbon">
+        <div class="content-header">
+          <div class="content-header-title">
+            <h1>Carbon Credit <span class="text-gradient">Trading & Exchange</span></h1>
+            <p>Monetize your verified carbon reduction credits ($SEC) or cash out for ESG vouchers.</p>
+          </div>
+        </div>
+
+        <div class="grid-2">
+          <div class="glass-panel" style="padding: 2rem;">
+            <span class="badge badge-gold" style="margin-bottom: 0.75rem;">Verified ESG Credits</span>
+            <h3 style="font-size: 1.3rem; margin-bottom: 0.5rem;">🌱 My Carbon Balance</h3>
+            <div style="font-size: 2.5rem; font-weight: 800; color: var(--accent-amber); margin-bottom: 1rem;" id="carbonBalanceText">14.2 SEC</div>
+            <p style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 1.5rem;">1 SEC Credit = 10 kg Verified CO₂ Diverted ($2.50 USD market rate).</p>
+            <button class="btn btn-gold" style="width: 100%;" onclick="exchangeCarbonCredits()">
+              💰 Convert SEC Credits to $35.50 Voucher
+            </button>
+          </div>
+
+          <div class="glass-panel" style="padding: 2rem;">
+            <h3 style="font-size: 1.1rem; margin-bottom: 0.75rem;">📈 Corporate Offsetting Buyers</h3>
+            <div style="font-size: 0.85rem; color: var(--text-muted); line-height: 1.8;">
+              • <strong>Patagonia Eco Fund</strong> (Buying 400 SEC @ $2.55)<br />
+              • <strong>Nike Move To Zero</strong> (Buying 800 SEC @ $2.50)<br />
+              • <strong>H&M Conscious Foundation</strong> (Buying 200 SEC @ $2.45)
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- TAB 6: UPCYCLED ECO MARKETPLACE -->
+      <section class="tab-content" id="tabUserMarket">
+        <div class="content-header">
+          <div class="content-header-title">
+            <h1>Upcycled <span class="text-gradient">Eco Marketplace</span></h1>
+            <p>Redeem your earned Eco Points for sustainable products and raw fiber materials.</p>
+          </div>
+        </div>
+
+        <div class="grid-3" id="marketplaceGrid">
+          <!-- Dynamically Populated by JS -->
+        </div>
+      </section>
+
+      <!-- TAB 7: DROP-OFF HUBS & FLEET RADAR -->
+      <section class="tab-content" id="tabUserHubs">
+        <div class="content-header">
+          <div class="content-header-title">
+            <h1>Nearby <span class="text-gradient">Recycling Hubs & Fleet Radar</span></h1>
+            <p>Locate automated drop boxes and track active collection trucks in real-time.</p>
+          </div>
+        </div>
+
+        <div class="grid-2">
+          <div class="glass-panel" style="padding: 1.5rem;">
+            <h3 style="margin-bottom: 1rem;">🏢 Active Collection Centers</h3>
+            <div id="hubsListContainer">
+              <!-- Dynamically Populated by JS -->
+            </div>
+          </div>
+
+          <div class="glass-panel" style="padding: 1.5rem;">
+            <span class="badge badge-emerald" style="margin-bottom: 0.5rem;">Live Fleet Dispatch Radar</span>
+            <h3 style="margin-bottom: 1rem;">🚛 Active Collector Trucks</h3>
+
+            <!-- GIS Radar Visualizer -->
+            <div class="gis-map-canvas" id="gisRadarVisualizer" style="margin-bottom: 1rem;">
+              <canvas id="gisCanvas" width="400" height="240" style="width:100%; height:100%;"></canvas>
+            </div>
+
+            <div id="fleetRadarContainer">
+              <!-- Dynamically Populated by JS -->
+            </div>
+          </div>
+        </div>
+      </section>
+
+    </main>
+  </div>
+
+  <!-- ==========================================================================
+       SECTION 3: ADMIN DASHBOARD LAYOUT (CONTROL CENTER)
+       ========================================================================== -->
+  <div class="dashboard-layout" id="adminDashboardLayout" style="display: none;">
+    <!-- Navbar -->
+    <header class="navbar" style="border-bottom-color: rgba(99, 102, 241, 0.3);">
+      <div style="display: flex; align-items: center; gap: 1rem;">
+        <a href="#" class="nav-logo" style="text-decoration: none; font-family: Outfit; font-weight: 800; font-size: 1.3rem; color: #fff;">
+          🛡️ Sanjay<span class="text-gradient-indigo">Textiles</span>
+        </a>
+        <span class="badge badge-indigo">Admin Command Center</span>
+      </div>
+
+      <div style="display: flex; align-items: center; gap: 0.85rem;">
+        <button type="button" class="btn btn-outline btn-sm" onclick="toggleTheme()">🌗 Theme</button>
+
+        <div class="user-profile-btn">
+          <div class="avatar-circle" style="background: linear-gradient(135deg, #6366f1, #4f46e5);">ER</div>
+          <div style="line-height: 1.1;">
+            <div style="font-weight: 700; font-size: 0.8rem;" id="adminNameNav">Dr. Elena Rostova</div>
+            <div style="font-size: 0.68rem; color: #818cf8;">Facility Administrator</div>
+          </div>
+        </div>
+
+        <button class="btn btn-outline btn-sm" onclick="logout()">Logout 🚪</button>
+      </div>
+    </header>
+
+    <!-- Sidebar Navigation -->
+    <aside class="sidebar">
+      <a href="#" class="nav-item admin-active active" onclick="switchAdminTab(event, 'tabAdminOverview')">📊 Facility Command</a>
+      <a href="#" class="nav-item admin-active" onclick="switchAdminTab(event, 'tabAdminPickups')">🚛 Dispatch Queue</a>
+      <a href="#" class="nav-item admin-active" onclick="switchAdminTab(event, 'tabAdminShredder')">⚙️ Shredder Control</a>
+      <a href="#" class="nav-item admin-active" onclick="switchAdminTab(event, 'tabAdminFleet')">🚛 Fleet Logistics</a>
+      <a href="#" class="nav-item admin-active" onclick="switchAdminTab(event, 'tabAdminUsers')">👥 Partner Directory</a>
+      <a href="#" class="nav-item admin-active" onclick="switchAdminTab(event, 'tabAdminReports')">📄 ESG Audit Report</a>
+    </aside>
+
+    <!-- Main Content Area -->
+    <main class="main-content">
+
+      <!-- TAB 1: FACILITY COMMAND OVERVIEW -->
+      <section class="tab-content active" id="tabAdminOverview">
+        <div class="content-header">
+          <div class="content-header-title">
+            <h1>Sanjay Textiles <span class="text-gradient-indigo">Command Center</span></h1>
+            <p>System-wide textile collection stats, processing hub throughput, and environmental offsets.</p>
+          </div>
+          <button class="btn btn-indigo" onclick="openEsgReportModal()">📄 Generate ESG Audit Report</button>
+        </div>
+
+        <!-- 4 KPI Cards -->
+        <div class="grid-4" style="margin-bottom: 1.5rem;">
+          <div class="glass-panel stat-card">
+            <span style="font-size: 0.8rem; color: var(--text-muted); font-weight: 600;">Total Collected Waste</span>
+            <div class="stat-value text-gradient-indigo">58.4 Tons</div>
+            <div class="stat-trend up">↑ +14.2% YoY growth</div>
+          </div>
+
+          <div class="glass-panel stat-card">
+            <span style="font-size: 0.8rem; color: var(--text-muted); font-weight: 600;">Net Carbon Saved</span>
+            <div class="stat-value text-gradient">157.6 Tons</div>
+            <div class="stat-trend up">Target achieved 🎯</div>
+          </div>
+
+          <div class="glass-panel stat-card">
+            <span style="font-size: 0.8rem; color: var(--text-muted); font-weight: 600;">Pending Requests</span>
+            <div class="stat-value" style="color: var(--accent-amber);" id="adminPendingVal">3</div>
+            <div class="stat-trend">Requires Dispatch</div>
+          </div>
+
+          <div class="glass-panel stat-card">
+            <span style="font-size: 0.8rem; color: var(--text-muted); font-weight: 600;">Active Registered Users</span>
+            <div class="stat-value" style="color: var(--accent-cyan);">1,420</div>
+            <div class="stat-trend up">Donors & Recyclers</div>
+          </div>
+        </div>
+
+        <!-- Facility Systems Status Bar -->
+        <div class="grid-3" style="margin-bottom: 1.5rem;">
+          <div class="glass-panel" style="padding: 1rem; text-align: center;">
+            <div style="font-size: 0.75rem; color: var(--text-muted);">Shredder Motor Temp</div>
+            <div style="font-size: 1.2rem; font-weight: 800; color: var(--primary);" id="telemetryTemp">42°C (Optimal)</div>
+          </div>
+          <div class="glass-panel" style="padding: 1rem; text-align: center;">
+            <div style="font-size: 0.75rem; color: var(--text-muted);">Hydraulic Press Pressure</div>
+            <div style="font-size: 1.2rem; font-weight: 800; color: #818cf8;" id="telemetryPress">2,400 PSI</div>
+          </div>
+          <div class="glass-panel" style="padding: 1rem; text-align: center;">
+            <div style="font-size: 0.75rem; color: var(--text-muted);">Solar Energy Power Ratio</div>
+            <div style="font-size: 1.2rem; font-weight: 800; color: var(--accent-amber);">88% Green Energy</div>
+          </div>
+        </div>
+
+        <div class="grid-2">
+          <div class="glass-panel" style="padding: 1.5rem;">
+            <h3 style="margin-bottom: 1rem; font-size: 1rem;">📈 Monthly Waste Collection Volume (Tons)</h3>
+            <div style="height: 220px; position: relative;">
+              <canvas id="adminMonthlyChart"></canvas>
+            </div>
+          </div>
+
+          <div class="glass-panel" style="padding: 1.5rem;">
+            <h3 style="margin-bottom: 1rem; font-size: 1rem;">♻️ Waste Pathway Distribution</h3>
+            <div style="height: 220px; position: relative;">
+              <canvas id="adminStreamChart"></canvas>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- TAB 2: PICKUP REQUESTS & DISPATCH QUEUE -->
+      <section class="tab-content" id="tabAdminPickups">
+        <div class="content-header">
+          <div class="content-header-title">
+            <h1>Pickup Requests & <span class="text-gradient-indigo">Dispatch Queue</span></h1>
+            <p>Approve incoming collection tickets and assign circular recycling streams.</p>
+          </div>
+        </div>
+
+        <div class="glass-panel" style="padding: 1.5rem;">
+          <div class="custom-table-container">
+            <table class="custom-table">
+              <thead>
+                <tr>
+                  <th>Request ID</th>
+                  <th>Donor</th>
+                  <th>Fabric Details</th>
+                  <th>Weight</th>
+                  <th>Status</th>
+                  <th>Actions</th>
+                </tr>
+              </thead>
+              <tbody id="adminPickupsTableBody">
+                <!-- Dynamically Populated by JS -->
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      <!-- TAB 3: SHREDDER & BALING CONTROL STATION -->
+      <section class="tab-content" id="tabAdminShredder">
+        <div class="content-header">
+          <div class="content-header-title">
+            <h1>Automated Shredder & <span class="text-gradient-indigo">Baling Station</span></h1>
+            <p>Monitor industrial mechanical shredder motor speed and fiber bale compression.</p>
+          </div>
+          <button class="btn btn-danger" onclick="triggerEmergencyStop()">🚨 EMERGENCY STOP (E-STOP)</button>
+        </div>
+
+        <div class="grid-2">
+          <div class="glass-panel" style="padding: 2rem;">
+            <span class="badge badge-emerald" id="shredderStatusBadge" style="margin-bottom: 0.75rem;">Line #1 Active</span>
+            <h3 style="font-size: 1.25rem; margin-bottom: 0.5rem;">⚙️ Primary Shredder Motor RPM</h3>
+            <div style="font-size: 2.5rem; font-weight: 800; color: var(--primary);" id="shredderRpmText">1800 RPM</div>
+            <div style="display: flex; gap: 0.5rem; margin-top: 1.5rem;">
+              <button class="btn btn-outline" onclick="adjustShredder(-200)">- 200 RPM</button>
+              <button class="btn btn-indigo" onclick="adjustShredder(200)">+ 200 RPM Boost</button>
+            </div>
+          </div>
+
+          <div class="glass-panel" style="padding: 2rem;">
+            <span class="badge badge-indigo" style="margin-bottom: 0.75rem;">Bale Press #3</span>
+            <h3 style="font-size: 1.25rem; margin-bottom: 0.5rem;">📦 Compressed Fiber Bales Today</h3>
+            <div style="font-size: 2.5rem; font-weight: 800; color: #818cf8;">14 Bales (7,000 kg)</div>
+            <p style="font-size: 0.8rem; color: var(--text-muted); margin-top: 0.5rem;">Bale Density: 500 kg/m³ | High Grade Yarn Stream</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- TAB 4: FLEET LOGISTICS -->
+      <section class="tab-content" id="tabAdminFleet">
+        <div class="content-header">
+          <div class="content-header-title">
+            <h1>Fleet Logistics & <span class="text-gradient-indigo">Truck Dispatch</span></h1>
+            <p>Manage collector trucks, active driver contacts, and route capacities.</p>
+          </div>
+        </div>
+
+        <div class="glass-panel" style="padding: 1.5rem;">
+          <div class="custom-table-container">
+            <table class="custom-table">
+              <thead>
+                <tr>
+                  <th>Truck ID</th>
+                  <th>Driver Name</th>
+                  <th>Assigned Route</th>
+                  <th>Current Load</th>
+                  <th>Status</th>
+                </tr>
+              </thead>
+              <tbody id="adminFleetTableBody">
+                <!-- Dynamically Populated by JS -->
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      <!-- TAB 5: USER & PARTNER DIRECTORY -->
+      <section class="tab-content" id="tabAdminUsers">
+        <div class="content-header">
+          <div class="content-header-title">
+            <h1>Registered Users & <span class="text-gradient-indigo">Partner Directory</span></h1>
+            <p>Manage registered donors, boutiques, NGO partners, and award incentive bonuses.</p>
+          </div>
+          <button class="btn btn-indigo" onclick="openAddUserModal()">+ Add New User</button>
+        </div>
+
+        <div class="glass-panel" style="padding: 1.5rem;">
+          <div class="custom-table-container">
+            <table class="custom-table">
+              <thead>
+                <tr>
+                  <th>User & Email</th>
+                  <th>Role</th>
+                  <th>Total Waste Diverted</th>
+                  <th>Eco Points Balance</th>
+                  <th>Actions</th>
+                </tr>
+              </thead>
+              <tbody id="adminUsersTableBody">
+                <!-- Dynamically Populated by JS -->
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      <!-- TAB 6: ESG REPORTS & AUDIT -->
+      <section class="tab-content" id="tabAdminReports">
+        <div class="content-header">
+          <div class="content-header-title">
+            <h1>Sustainability & <span class="text-gradient-indigo">ESG Report Generator</span></h1>
+            <p>Compile official carbon offset and landfill diversion audit documentation.</p>
+          </div>
+        </div>
+
+        <div class="grid-2">
+          <div class="glass-panel" style="padding: 2rem;">
+            <h3 style="margin-bottom: 1rem;">📄 Generate Sustainability Audit</h3>
+            <div class="grid-2" style="margin-bottom: 1rem;">
+              <div class="form-group">
+                <label class="form-label">Audit Start Date</label>
+                <input type="date" class="form-control" value="2026-01-01" />
+              </div>
+              <div class="form-group">
+                <label class="form-label">Audit End Date</label>
+                <input type="date" class="form-control" value="2026-10-04" />
+              </div>
+            </div>
+            <button class="btn btn-indigo" style="width: 100%; font-size: 1rem;" onclick="openEsgReportModal()">
+              🖨️ Download Full ESG Report (PDF)
+            </button>
+          </div>
+
+          <div class="glass-panel" style="padding: 2rem;">
+            <span class="badge badge-emerald" style="margin-bottom: 0.75rem;">Compliance Ready</span>
+            <h3 style="font-size: 1.2rem; margin-bottom: 0.5rem;">📋 Live Compliance Breakdown</h3>
+            <div style="font-size: 0.85rem; color: var(--text-muted); line-height: 1.8;">
+              • <strong>Total Textile Waste Diverted:</strong> 58.4 Metric Tons<br />
+              • <strong>Net CO₂ Emissions Offset:</strong> 157.6 Metric Tons<br />
+              • <strong>Water Saved:</strong> 584,000 Liters<br />
+              • <strong>Compliance Standard:</strong> ISO 14001 Circular Certified
+            </div>
+          </div>
+        </div>
+      </section>
+
+    </main>
+  </div>
+
+  <!-- ==========================================================================
+       MODALS & TOASTS
+       ========================================================================== -->
+  <!-- DIGITAL QR TAG MODAL WITH CANVAS MATRIX GENERATOR -->
+  <div class="modal-overlay" id="qrModal">
+    <div class="modal-card" style="text-align: center;">
+      <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
+        <h3 style="font-size: 1.2rem;">Digital Shipping QR Tag</h3>
+        <button onclick="closeModal('qrModal')" style="background: none; border: none; color: var(--text-muted); font-size: 1.35rem; cursor: pointer;">&times;</button>
+      </div>
+
+      <div style="padding: 1.25rem; background: #ffffff; border-radius: var(--radius-sm); display: inline-block; margin: 0.5rem 0;">
+        <canvas id="qrCodeCanvas" width="160" height="160" style="display:block; margin:0 auto;"></canvas>
+        <div style="font-family: monospace; font-weight: 700; color: #000; margin-top: 0.5rem;" id="qrCodeText">ST-QR-8910-X2</div>
+      </div>
+
+      <p style="font-size: 0.8rem; color: var(--text-muted); margin-bottom: 1.25rem;">Attach this tag to your textile shipping container prior to driver pickup.</p>
+      <button class="btn btn-primary" style="width: 100%;" onclick="window.print()">🖨️ Print Shipping Sticker</button>
+    </div>
+  </div>
+
+  <!-- BATCH STREAM ASSIGNMENT MODAL -->
+  <div class="modal-overlay" id="batchModal">
+    <div class="modal-card">
+      <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
+        <h3>⚙️ Assign Circular Recycling Stream</h3>
+        <button onclick="closeModal('batchModal')" style="background: none; border: none; color: var(--text-muted); font-size: 1.35rem; cursor: pointer;">&times;</button>
+      </div>
+
+      <p style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 1rem;" id="batchModalTarget">Allocating ticket #PK-1089</p>
+
+      <div class="form-group">
+        <label class="form-label">Target Pathway Stream</label>
+        <select id="batchStreamSelect" class="form-control form-select">
+          <option>Mechanical Fiber Shredding (Industrial Yarn)</option>
+          <option>Direct Charity Donation (Pre-loved Garments)</option>
+          <option>Upcycled Artisan Fashion & Decor</option>
+          <option>Chemical Depolymerization (Pure PET Recovery)</option>
+        </select>
+      </div>
+
+      <button class="btn btn-indigo" style="width: 100%;" onclick="confirmBatchAssignment()">Confirm Stream Assignment</button>
+    </div>
+  </div>
+
+  <!-- ADD USER MODAL -->
+  <div class="modal-overlay" id="addUserModal">
+    <div class="modal-card">
+      <h3 style="margin-bottom: 1rem;">Register New User / Partner</h3>
+      <form onsubmit="handleAdminAddUser(event)">
+        <div class="form-group">
+          <label class="form-label">Full Name / Organization</label>
+          <input type="text" id="newUserName" class="form-control" placeholder="e.g. Tiruppur Textile Atelier" required />
+        </div>
+        <div class="form-group">
+          <label class="form-label">Email Address</label>
+          <input type="email" id="newUserEmail" class="form-control" placeholder="e.g. contact@atelier.com" required />
+        </div>
+        <div class="form-group">
+          <label class="form-label">Role Type</label>
+          <select id="newUserRole" class="form-control form-select">
+            <option value="Individual Donor">Individual Household Donor</option>
+            <option value="Tailor Boutique">Tailor Boutique / Garment Business</option>
+            <option value="NGO Partner">NGO Charity Partner</option>
+            <option value="Recycler Partner">Textile Recycler Partner</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Initial Bonus Points</label>
+          <input type="number" id="newUserPoints" class="form-control" value="250" required />
+        </div>
+        <div style="display: flex; gap: 0.5rem; margin-top: 1.5rem;">
+          <button type="button" class="btn btn-outline" style="flex:1;" onclick="closeModal('addUserModal')">Cancel</button>
+          <button type="submit" class="btn btn-indigo" style="flex:1;">Register Account</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- OFFICIAL ESG REPORT MODAL -->
+  <div class="modal-overlay" id="esgReportModal">
+    <div class="modal-card" style="max-width: 680px;">
+      <div style="display:flex; justify-content:space-between; align-items:center; border-bottom:1px solid var(--border-color); padding-bottom:0.75rem; margin-bottom:1rem;">
+        <div>
+          <h2 style="font-size:1.3rem;">📄 Official ESG Audit Certificate</h2>
+          <span style="font-size:0.75rem; color: var(--primary);">ISO 14001 & Circularity Verified</span>
+        </div>
+        <button onclick="closeModal('esgReportModal')" style="background:none; border:none; color:var(--text-muted); font-size:1.5rem; cursor:pointer;">&times;</button>
+      </div>
+
+      <div style="padding:1.25rem; background:#070a13; border:1px solid var(--border-color); border-radius: var(--radius-sm); font-size:0.85rem; line-height:1.8; margin-bottom:1.25rem;">
+        <div style="display:flex; justify-content:space-between; margin-bottom:0.5rem;">
+          <strong>Facility:</strong> <span>Sanjay Textiles Central Plant (Tiruppur)</span>
+        </div>
+        <div style="display:flex; justify-content:space-between; margin-bottom:0.5rem;">
+          <strong>Audit ID:</strong> <span class="font-mono">ESG-2026-AUD-8821</span>
+        </div>
+        <div style="display:flex; justify-content:space-between; margin-bottom:0.5rem;">
+          <strong>Diverted Waste Volume:</strong> <span>58.4 Metric Tons</span>
+        </div>
+        <div style="display:flex; justify-content:space-between; margin-bottom:0.5rem;">
+          <strong>Carbon Offset Equivalent:</strong> <span>157.6 MT CO₂e</span>
+        </div>
+        <div style="display:flex; justify-content:space-between;">
+          <strong>Water Saved:</strong> <span>584,000 Liters</span>
+        </div>
+      </div>
+
+      <div style="display:flex; gap:0.5rem;">
+        <button class="btn btn-outline" style="flex:1;" onclick="closeModal('esgReportModal')">Close</button>
+        <button class="btn btn-indigo" style="flex:1;" onclick="window.print()">🖨️️ Print Audit Document</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- TOAST CONTAINER -->
+  <div class="toast-container" id="toastContainer"></div>
+
+  <!-- ==========================================================================
+       APPLICATION SCRIPT ENGINE & STATE MANAGEMENT
+       ========================================================================== -->
+  <script>
+    /* ==================== STATE STORE ==================== */
+    const state = {
+      role: 'user',
+      selectedFabric: 'cotton',
+      activeBatchModalId: null,
+      user: {
+        name: 'Sophia Carter',
+        email: 'sophia@example.com',
+        points: 1280,
+        carbonSec: 14.2,
+        totalWasteKg: 142.5,
+        co2SavedKg: 385.0,
+        waterSavedL: 1420,
+        pickups: [
+          { id: 'PK-1089', fabric: 'Cotton Scraps & Denim Twill', weight: 15.0, status: 'Dispatched', points: 150 },
+          { id: 'PK-1042', fabric: 'Polyester Sportswear Offcuts', weight: 28.5, status: 'Recycled', points: 285 },
+          { id: 'PK-0988', fabric: 'Pure Silk Tailoring Offcuts', weight: 12.0, status: 'Recycled', points: 240 }
+        ]
+      },
+      admin: {
+        name: 'Dr. Elena Rostova',
+        shredderRpm: 1800,
+        pickups: [
+          { id: 'PK-1089', donor: 'Sophia Carter', fabric: 'Cotton Scraps', weight: '15.0 kg', status: 'Dispatched' },
+          { id: 'PK-1090', donor: 'Sanjay Atelier', fabric: 'Denim Twill', weight: '42.0 kg', status: 'Pending' },
+          { id: 'PK-1091', donor: 'GreenThread NGO', fabric: 'Mixed Fabrics', weight: '85.0 kg', status: 'Pending' }
+        ],
+        fleet: [
+          { id: 'TRK-01', driver: 'Rajesh Kumar (+91 98765 43210)', route: 'Sector 4 / North Hub', load: '650 / 1000 kg', status: 'Active Dispatch' },
+          { id: 'TRK-02', driver: 'Vikram Singh (+91 98123 45678)', route: 'Downtown / Central Depot', load: '820 / 1000 kg', status: 'In Transit' }
+        ],
+        users: [
+          { name: 'Sophia Carter', email: 'sophia@example.com', role: 'Individual Donor', kg: 142.5, points: 1280 },
+          { name: 'Sanjay Atelier', email: 'contact@sanjayfashion.com', role: 'Tailor Boutique', kg: 118.0, points: 940 },
+          { name: 'GreenThread NGO', email: 'help@greenthread.org', role: 'NGO Partner', kg: 92.4, points: 710 }
+        ]
+      },
+      leaderboard: [
+        { rank: '🥇 #1', name: 'Sophia Carter', type: 'individual', kg: '142.5 kg', points: '1,280 Pts' },
+        { rank: '🥈 #2', name: 'Sanjay Fashion Atelier', type: 'boutique', kg: '118.0 kg', points: '940 Pts' },
+        { rank: '🥉 #3', name: 'GreenThread NGO', type: 'ngo', kg: '92.4 kg', points: '710 Pts' },
+        { rank: '#4', name: 'Aarav Sharma', type: 'individual', kg: '64.2 kg', points: '520 Pts' }
+      ],
+      marketplace: [
+        { id: 'm1', icon: '👜', title: 'Upcycled Denim Tote Bag', desc: 'Crafted from 100% recycled pre-loved jeans.', pts: 450 },
+        { id: 'm2', icon: '🧶', title: 'Recycled Cotton Fiber Yarn', desc: '1kg high-tensile yarn for weavers.', pts: 300 },
+        { id: 'm3', icon: '🌱', title: 'Eco Thermal Insulation Pad', desc: 'Acoustic & thermal building insulation pad.', pts: 600 }
+      ],
+      hubs: [
+        { name: 'Sanjay Textiles Central Plant', addr: 'Industrial Area Phase 2, Plant Gate 4', bin: '84% Full' },
+        { name: 'Downtown Circular Eco Depot', addr: '45 Circular Road, Next to Metro', bin: '42% Full' }
+      ],
+      charts: {}
+    };
+
+    /* ==================== INITIALIZATION ==================== */
+    document.addEventListener('DOMContentLoaded', () => {
+      renderUserPickupsTable();
+      renderLeaderboard('all');
+      renderMarketplace();
+      renderHubsAndFleet();
+      renderAdminPickupsTable();
+      renderAdminFleetTable();
+      renderAdminUsersTable();
+      initCharts();
+      startScannerWaveform();
+      computeFiberValuation();
+      initGisRadar();
+    });
+
+    /* ==================== AUTHENTICATION & PORTAL LOGIC ==================== */
+    function switchPortal(role) {
+      state.role = role;
+      document.getElementById('roleBtnUser').classList.toggle('active', role === 'user');
+      document.getElementById('roleBtnAdmin').classList.toggle('active', role === 'admin');
+
+      const title = document.getElementById('authPortalTitle');
+      const sub = document.getElementById('authPortalSubtitle');
+
+      if (role === 'admin') {
+        title.textContent = 'Admin Control Center';
+        sub.textContent = 'Facility management & processing command';
+      } else {
+        title.textContent = 'Welcome Back!';
+        sub.textContent = 'Sign in to your sustainability dashboard';
+      }
+    }
+
+    function switchAuthTab(tab) {
+      document.getElementById('tabBtnLogin').classList.toggle('active', tab === 'login');
+      document.getElementById('tabBtnSignup').classList.toggle('active', tab === 'signup');
+      document.getElementById('loginFormContainer').style.display = tab === 'login' ? 'block' : 'none';
+      document.getElementById('signupFormContainer').style.display = tab === 'signup' ? 'block' : 'none';
+    }
+
+    function quickFill(role) {
+      switchPortal(role);
+      if (role === 'admin') {
+        document.getElementById('loginEmail').value = 'elena@sanjaytextiles.com';
+      } else {
+        document.getElementById('loginEmail').value = 'sophia@example.com';
+      }
+      document.getElementById('loginPassword').value = 'password123';
+    }
+
+    function handleLogin(e) {
+      e.preventDefault();
+      document.getElementById('authWrapper').style.display = 'none';
+
+      if (state.role === 'admin') {
+        document.getElementById('adminDashboardLayout').style.display = 'grid';
+        showToast('Logged into Administrator Command Center');
+      } else {
+        document.getElementById('userDashboardLayout').style.display = 'grid';
+        showToast(`Welcome back, ${state.user.name}!`);
+      }
+    }
+
+    function handleSignup(e) {
+      e.preventDefault();
+      showToast('Account registered successfully! 100 Bonus Points added.');
+      switchAuthTab('login');
+    }
+
+    function logout() {
+      document.getElementById('userDashboardLayout').style.display = 'none';
+      document.getElementById('adminDashboardLayout').style.display = 'none';
+      document.getElementById('authWrapper').style.display = 'grid';
+      showToast('Logged out successfully.');
+    }
+
+    /* ==================== NAVIGATION TAB SWITCHERS ==================== */
+    function switchUserTab(e, tabId) {
+      e.preventDefault();
+      document.querySelectorAll('#userDashboardLayout .nav-item').forEach(el => el.classList.remove('active'));
+      e.currentTarget.classList.add('active');
+
+      document.querySelectorAll('#userDashboardLayout .tab-content').forEach(el => el.classList.remove('active'));
+      document.getElementById(tabId).classList.add('active');
+    }
+
+    function triggerNavTab(tabId) {
+      const link = document.querySelector(`#userDashboardLayout .nav-item[onclick*="${tabId}"]`);
+      if (link) link.click();
+    }
+
+    function switchAdminTab(e, tabId) {
+      e.preventDefault();
+      document.querySelectorAll('#adminDashboardLayout .nav-item').forEach(el => el.classList.remove('active'));
+      e.currentTarget.classList.add('active');
+
+      document.querySelectorAll('#adminDashboardLayout .tab-content').forEach(el => el.classList.remove('active'));
+      document.getElementById(tabId).classList.add('active');
+    }
+
+    function toggleTheme() {
+      const current = document.documentElement.getAttribute('data-theme');
+      const next = current === 'light' ? 'dark' : 'light';
+      document.documentElement.setAttribute('data-theme', next);
+      showToast(`Switched to ${next} theme`);
+    }
+
+    function toggleNotifPopover() {
+      document.getElementById('userNotifPopover').classList.toggle('show');
+    }
+
+    /* ==================== USER ACTIONS & RENDERERS ==================== */
+    function selectFabric(el, type) {
+      document.querySelectorAll('.fabric-type-box').forEach(b => b.classList.remove('selected'));
+      el.classList.add('selected');
+      state.selectedFabric = type;
+    }
+
+    function calcReward() {
+      const weight = parseFloat(document.getElementById('pickupWeightInput').value) || 0;
+      const pts = Math.round(weight * 10);
+      const co2 = (weight * 2.7).toFixed(1);
+
+      document.getElementById('calcPoints').textContent = `+${pts} Eco Pts`;
+      document.getElementById('calcCo2').textContent = `${co2} kg CO₂ Offset`;
+    }
+
+    function handlePickupSubmit(e) {
+      e.preventDefault();
+      const weight = parseFloat(document.getElementById('pickupWeightInput').value) || 15;
+      const newId = `PK-${Math.floor(1000 + Math.random() * 9000)}`;
+      const earnedPts = Math.round(weight * 10);
+      const earnedCo2 = (weight * 2.7);
+
+      // Update state
+      state.user.pickups.unshift({
+        id: newId,
+        fabric: `${state.selectedFabric.toUpperCase()} Waste Material`,
+        weight: weight,
+        status: 'Dispatched',
+        points: earnedPts
+      });
+
+      state.admin.pickups.unshift({
+        id: newId,
+        donor: state.user.name,
+        fabric: `${state.selectedFabric.toUpperCase()} Waste`,
+        weight: `${weight} kg`,
+        status: 'Pending'
+      });
+
+      state.user.points += earnedPts;
+      state.user.totalWasteKg += weight;
+      state.user.co2SavedKg += earnedCo2;
+      state.user.waterSavedL += Math.round(weight * 10);
+
+      updateUserUI();
+      renderUserPickupsTable();
+      renderAdminPickupsTable();
+
+      // Update dashboard active card
+      document.getElementById('dashNextPickupTitle').textContent = `🚚 Request #${newId} (${state.selectedFabric.toUpperCase()})`;
+      document.getElementById('dashNextPickupReward').textContent = `+${earnedPts} Eco Points & ${earnedCo2.toFixed(1)} kg CO₂ Saved`;
+
+      showToast(`Pickup request #${newId} submitted! Earned +${earnedPts} Pts.`);
+      triggerNavTab('tabUserOverview');
+    }
+
+    function updateUserUI() {
+      document.getElementById('userPointsDisplay').textContent = `${state.user.points.toLocaleString()} Pts`;
+      document.getElementById('statPointsVal').textContent = `${state.user.points.toLocaleString()} Pts`;
+      document.getElementById('statWasteVal').textContent = `${state.user.totalWasteKg.toFixed(1)} kg`;
+      document.getElementById('statCo2Val').textContent = `${state.user.co2SavedKg.toFixed(1)} kg`;
+      document.getElementById('statWaterVal').textContent = `${state.user.waterSavedL.toLocaleString()} L`;
+      document.getElementById('dashEquivPools').textContent = `🏊 ${(state.user.waterSavedL / 500).toFixed(1)} Swimming Pools Saved`;
+    }
+
+    function renderUserPickupsTable() {
+      const tbody = document.getElementById('userPickupsTableBody');
+      tbody.innerHTML = state.user.pickups.map(p => `
+        <tr>
+          <td><strong>#${p.id}</strong></td>
+          <td>${p.fabric}</td>
+          <td>${p.weight} kg</td>
+          <td><span class="badge ${p.status === 'Recycled' ? 'badge-emerald' : 'badge-indigo'}">${p.status}</span></td>
+          <td style="color: var(--primary); font-weight: 700;">+${p.points} Pts</td>
+          <td><button class="btn btn-outline btn-sm" onclick="openQrModal('${p.id}')">QR Tag</button></td>
+        </tr>
+      `).join('');
+    }
+
+    /* ==================== ADVANCED FEATURE 1: FIBER PRICE CALCULATOR ==================== */
+    function computeFiberValuation() {
+      const baseRate = parseFloat(document.getElementById('calcMaterialSelect').value) || 45;
+      const weight = parseFloat(document.getElementById('calcWeightKg').value) || 0;
+      const gradeMult = parseFloat(document.getElementById('calcGradeSelect').value) || 1.0;
+      const moisture = parseFloat(document.getElementById('calcMoistureRange').value) || 0;
+
+      document.getElementById('calcMoistureVal').textContent = `${moisture}% Moisture`;
+
+      // Price Penalty Formula: -1.5% per 1% moisture above 8%
+      const moisturePenalty = moisture > 8 ? (1 - ((moisture - 8) * 0.015)) : 1.0;
+      const finalPerKg = (baseRate * gradeMult * Math.max(0.5, moisturePenalty));
+      const totalQuote = finalPerKg * weight;
+
+      document.getElementById('quotePerKg').textContent = `₹ ${finalPerKg.toFixed(2)} per kg`;
+      document.getElementById('quoteTotalVal').textContent = `₹ ${Math.round(totalQuote).toLocaleString()}`;
+    }
+
+    /* ==================== ADVANCED FEATURE 2: QR CANVAS GENERATOR ==================== */
+    function generateQrCanvas(text) {
+      const canvas = document.getElementById('qrCodeCanvas');
+      if (!canvas) return;
+      const ctx = canvas.getContext('2d');
+      const size = canvas.width;
+      const cells = 10;
+      const cellSize = size / cells;
+
+      ctx.fillStyle = '#ffffff';
+      ctx.fillRect(0, 0, size, size);
+
+      ctx.fillStyle = '#000000';
+      for (let r = 0; r < cells; r++) {
+        for (let c = 0; c < cells; c++) {
+          if ((r + c + text.length) % 2 === 0 || (r === 0 || c === 0 || r === cells-1 || c === cells-1)) {
+            ctx.fillRect(c * cellSize, r * cellSize, cellSize - 1, cellSize - 1);
+          }
+        }
+      }
+    }
+
+    /* ==================== ADVANCED FEATURE 3: GIS RADAR CANVAS VISUALIZER ==================== */
+    function initGisRadar() {
+      const canvas = document.getElementById('gisCanvas');
+      if (!canvas) return;
+      const ctx = canvas.getContext('2d');
+      let angle = 0;
+
+      function drawRadar() {
+        const cx = canvas.width / 2;
+        const cy = canvas.height / 2;
+        const r = 90;
+
+        ctx.fillStyle = '#090d16';
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+        // Concentric Circles
+        ctx.strokeStyle = 'rgba(16, 185, 129, 0.2)';
+        ctx.lineWidth = 1;
+        ctx.beginPath(); ctx.arc(cx, cy, r * 0.33, 0, Math.PI * 2); ctx.stroke();
+        ctx.beginPath(); ctx.arc(cx, cy, r * 0.66, 0, Math.PI * 2); ctx.stroke();
+        ctx.beginPath(); ctx.arc(cx, cy, r, 0, Math.PI * 2); ctx.stroke();
+
+        // Sweep Line
+        ctx.strokeStyle = '#10b981';
+        ctx.lineWidth = 2;
+        ctx.beginPath();
+        ctx.moveTo(cx, cy);
+        ctx.lineTo(cx + Math.cos(angle) * r, cy + Math.sin(angle) * r);
+        ctx.stroke();
+
+        // Active Truck Blips
+        ctx.fillStyle = '#06b6d4';
+        ctx.beginPath(); ctx.arc(cx + 35, cy - 20, 5, 0, Math.PI * 2); ctx.fill();
+        ctx.fillStyle = '#f59e0b';
+        ctx.beginPath(); ctx.arc(cx - 45, cy + 30, 5, 0, Math.PI * 2); ctx.fill();
+
+        angle += 0.03;
+        requestAnimationFrame(drawRadar);
+      }
+      drawRadar();
+    }
+
+    /* ==================== AI SCANNER ENGINE ==================== */
+    function runAiScan(sample) {
+      const box = document.getElementById('aiScannerBox');
+      box.classList.add('scanning');
+
+      setTimeout(() => {
+        box.classList.remove('scanning');
+        document.getElementById('aiPlaceholder').style.display = 'none';
+        document.getElementById('aiResultBox').style.display = 'block';
+
+        if (sample === 'Organic Cotton') {
+          document.getElementById('aiResultTitle').textContent = 'Organic Cotton Sample';
+          document.getElementById('aiResultComp').textContent = '100% Pure Organic Cotton';
+          document.getElementById('aiResultScore').textContent = '98% High Recyclability';
+          document.getElementById('aiResultRec').textContent = 'Direct Mechanical Shredding for Yarn (Market Rate: ₹150 / kg)';
+        } else if (sample === 'Polyester Blend') {
+          document.getElementById('aiResultTitle').textContent = 'Polyester Sportswear';
+          document.getElementById('aiResultComp').textContent = '85% PET Polyester, 15% Elastane';
+          document.getElementById('aiResultScore').textContent = '76% Medium (Chemical Stream)';
+          document.getElementById('aiResultRec').textContent = 'Chemical Depolymerization Recovery (Market Rate: ₹80 / kg)';
+        } else if (sample === 'Pure Silk') {
+          document.getElementById('aiResultTitle').textContent = 'Pure Silk Offcuts';
+          document.getElementById('aiResultComp').textContent = '100% Natural Mulberry Silk';
+          document.getElementById('aiResultScore').textContent = '99% Premium Luxury Grade';
+          document.getElementById('aiResultRec').textContent = 'Artisan Craft Upcycling Stream (Market Rate: ₹280 / kg)';
+        } else {
+          document.getElementById('aiResultTitle').textContent = 'Pre-loved Denim Twill';
+          document.getElementById('aiResultComp').textContent = '98% Organic Cotton, 2% Elastane';
+          document.getElementById('aiResultScore').textContent = '94% High Recyclability';
+          document.getElementById('aiResultRec').textContent = 'Canvas Tote Bags & Mechanical Shredding (Market Rate: ₹120 / kg)';
+        }
+
+        showToast(`AI Vision Analysis Complete for ${sample}`);
+      }, 1200);
+    }
+
+    function startScannerWaveform() {
+      const canvas = document.getElementById('scannerCanvas');
+      if (!canvas) return;
+      const ctx = canvas.getContext('2d');
+      let step = 0;
+
+      function draw() {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        ctx.beginPath();
+        ctx.lineWidth = 2;
+        ctx.strokeStyle = '#10b981';
+
+        for (let x = 0; x < canvas.width; x += 5) {
+          const y = (canvas.height / 2) + Math.sin((x + step) * 0.05) * 20 * Math.cos((x + step) * 0.01);
+          if (x === 0) ctx.moveTo(x, y);
+          else ctx.lineTo(x, y);
+        }
+        ctx.stroke();
+        step += 2;
+        requestAnimationFrame(draw);
+      }
+      draw();
+    }
+
+    /* ==================== LEADERBOARD & MARKETPLACE ==================== */
+    function filterLeaderboard(filter) {
+      renderLeaderboard(filter);
+      showToast(`Filtered leaderboard by ${filter.toUpperCase()}`);
+    }
+
+    function renderLeaderboard(filter) {
+      const tbody = document.getElementById('leaderboardTableBody');
+      const items = filter === 'all' ? state.leaderboard : state.leaderboard.filter(i => i.type === filter);
+
+      tbody.innerHTML = items.map(item => `
+        <tr>
+          <td><strong>${item.rank}</strong></td>
+          <td>${item.name}</td>
+          <td><span class="badge badge-indigo">${item.type}</span></td>
+          <td>${item.kg}</td>
+          <td><span class="badge badge-gold">${item.points}</span></td>
+        </tr>
+      `).join('');
+    }
+
+    function exchangeCarbonCredits() {
+      if (state.user.carbonSec > 0) {
+        showToast(`Converted ${state.user.carbonSec} SEC Credits into $${(state.user.carbonSec * 2.5).toFixed(2)} ESG Voucher!`);
+        state.user.carbonSec = 0;
+        document.getElementById('userCarbonDisplay').textContent = '0.0 SEC';
+        document.getElementById('carbonBalanceText').textContent = '0.0 SEC';
+      } else {
+        showToast('No SEC Carbon Credits available to exchange.');
+      }
+    }
+
+    function renderMarketplace() {
+      const grid = document.getElementById('marketplaceGrid');
+      grid.innerHTML = state.marketplace.map(m => `
+        <div class="product-card">
+          <div class="product-img">${m.icon}</div>
+          <div class="product-body">
+            <div>
+              <h4 style="font-size: 1rem;">${m.title}</h4>
+              <p style="font-size: 0.8rem; color: var(--text-muted); margin-top: 0.25rem;">${m.desc}</p>
+            </div>
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 1rem;">
+              <span class="badge badge-gold">${m.pts} Pts</span>
+              <button class="btn btn-primary btn-sm" onclick="redeemProduct('${m.title}', ${m.pts})">Redeem Item</button>
+            </div>
+          </div>
+        </div>
+      `).join('');
+    }
+
+    function redeemProduct(title, cost) {
+      if (state.user.points >= cost) {
+        state.user.points -= cost;
+        updateUserUI();
+        showToast(`Redeemed "${title}"! Deduction: ${cost} Pts.`);
+      } else {
+        showToast(`Insufficient Eco Points! You need ${cost} Pts.`);
+      }
+    }
+
+    function renderHubsAndFleet() {
+      const hubsBox = document.getElementById('hubsListContainer');
+      hubsBox.innerHTML = state.hubs.map(h => `
+        <div style="padding: 1rem; background: var(--bg-surface); border-radius: var(--radius-sm); border: 1px solid var(--border-color); margin-bottom: 0.75rem;">
+          <div style="font-weight: 700; font-size: 0.95rem;">📍 ${h.name}</div>
+          <div style="font-size: 0.8rem; color: var(--text-muted);">${h.addr}</div>
+          <span class="badge badge-cyan" style="margin-top: 0.5rem;">Bin Status: ${h.bin}</span>
+        </div>
+      `).join('');
+
+      const fleetBox = document.getElementById('fleetRadarContainer');
+      fleetBox.innerHTML = state.admin.fleet.map(f => `
+        <div style="padding: 1rem; background: var(--bg-surface); border-radius: var(--radius-sm); border: 1px solid var(--border-color); margin-bottom: 0.75rem;">
+          <div style="display: flex; justify-content: space-between; align-items: center;">
+            <span class="badge badge-emerald">${f.id} - ${f.status}</span>
+            <span style="font-size: 0.75rem; color: var(--text-muted);">${f.load}</span>
+          </div>
+          <div style="font-weight: 700; font-size: 0.9rem; margin-top: 0.35rem;">Driver: ${f.driver}</div>
+          <div style="font-size: 0.8rem; color: var(--text-muted);">Route: ${f.route}</div>
+        </div>
+      `).join('');
+    }
+
+    /* ==================== ADMIN COMMAND ACTIONS ==================== */
+    function adjustShredder(delta) {
+      state.admin.shredderRpm += delta;
+      document.getElementById('shredderRpmText').textContent = `${state.admin.shredderRpm} RPM`;
+      showToast(`Primary Shredder Speed adjusted to ${state.admin.shredderRpm} RPM`);
+    }
+
+    function triggerEmergencyStop() {
+      state.admin.shredderRpm = 0;
+      document.getElementById('shredderRpmText').textContent = '0 RPM (HALTED)';
+      document.getElementById('shredderStatusBadge').textContent = '🚨 SAFETY HALT';
+      document.getElementById('shredderStatusBadge').className = 'badge badge-rose';
+      showToast('🚨 EMERGENCY STOP ACTIVATED: Shredder line halted immediately.');
+    }
+
+    function renderAdminPickupsTable() {
+      const tbody = document.getElementById('adminPickupsTableBody');
+      tbody.innerHTML = state.admin.pickups.map(p => `
+        <tr>
+          <td><strong>#${p.id}</strong></td>
+          <td>${p.donor}</td>
+          <td>${p.fabric}</td>
+          <td>${p.weight}</td>
+          <td><span class="badge ${p.status === 'Recycled' ? 'badge-emerald' : p.status === 'Dispatched' ? 'badge-indigo' : 'badge-gold'}">${p.status}</span></td>
+          <td><button class="btn btn-indigo btn-sm" onclick="openBatchModal('${p.id}')">Assign Stream</button></td>
+        </tr>
+      `).join('');
+
+      document.getElementById('adminPendingVal').textContent = state.admin.pickups.filter(p => p.status === 'Pending').length;
+    }
+
+    function renderAdminFleetTable() {
+      const tbody = document.getElementById('adminFleetTableBody');
+      tbody.innerHTML = state.admin.fleet.map(f => `
+        <tr>
+          <td><strong>${f.id}</strong></td>
+          <td>${f.driver}</td>
+          <td>${f.route}</td>
+          <td>${f.load}</td>
+          <td><span class="badge badge-emerald">${f.status}</span></td>
+        </tr>
+      `).join('');
+    }
+
+    function renderAdminUsersTable() {
+      const tbody = document.getElementById('adminUsersTableBody');
+      tbody.innerHTML = state.admin.users.map(u => `
+        <tr>
+          <td><strong>${u.name}</strong><br /><span style="font-size: 0.75rem; color: var(--text-muted);">${u.email}</span></td>
+          <td><span class="badge badge-indigo">${u.role}</span></td>
+          <td>${u.kg} kg</td>
+          <td>${u.points} Pts</td>
+          <td><button class="btn btn-outline btn-sm" onclick="awardBonusPoints('${u.name}')">+ Award Pts</button></td>
+        </tr>
+      `).join('');
+    }
+
+    function awardBonusPoints(name) {
+      const u = state.admin.users.find(x => x.name === name);
+      if (u) u.points += 100;
+      renderAdminUsersTable();
+      showToast(`Awarded +100 Eco Points bonus to ${name}`);
+    }
+
+    function openBatchModal(id) {
+      state.activeBatchModalId = id;
+      document.getElementById('batchModalTarget').textContent = `Allocating circular pathway for ticket #${id}`;
+      document.getElementById('batchModal').classList.add('show');
+    }
+
+    function confirmBatchAssignment() {
+      const sel = document.getElementById('batchStreamSelect').value;
+      const t = state.admin.pickups.find(x => x.id === state.activeBatchModalId);
+      if (t) t.status = 'Recycled';
+
+      const uTicket = state.user.pickups.find(x => x.id === state.activeBatchModalId);
+      if (uTicket) uTicket.status = 'Recycled';
+
+      renderAdminPickupsTable();
+      renderUserPickupsTable();
+      closeModal('batchModal');
+      showToast(`Assigned #${state.activeBatchModalId} to stream: ${sel}`);
+    }
+
+    function openAddUserModal() {
+      document.getElementById('addUserModal').classList.add('show');
+    }
+
+    function handleAdminAddUser(e) {
+      e.preventDefault();
+      const name = document.getElementById('newUserName').value;
+      const email = document.getElementById('newUserEmail').value;
+      const role = document.getElementById('newUserRole').value;
+      const pts = parseInt(document.getElementById('newUserPoints').value) || 250;
+
+      state.admin.users.unshift({
+        name: name,
+        email: email,
+        role: role,
+        kg: 0.0,
+        points: pts
+      });
+
+      renderAdminUsersTable();
+      closeModal('addUserModal');
+      showToast(`Registered new user ${name}!`);
+    }
+
+    function openEsgReportModal() {
+      document.getElementById('esgReportModal').classList.add('show');
+    }
+
+    /* ==================== MODAL HELPERS ==================== */
+    function openQrModal(id) {
+      const qrStr = `ST-QR-${id}-2026`;
+      document.getElementById('qrCodeText').textContent = qrStr;
+      generateQrCanvas(qrStr);
+      document.getElementById('qrModal').classList.add('show');
+    }
+
+    function closeModal(id) {
+      document.getElementById(id).classList.remove('show');
+    }
+
+    function showToast(msg) {
+      const container = document.getElementById('toastContainer');
+      const toast = document.createElement('div');
+      toast.className = 'toast';
+      toast.innerHTML = `✨ <strong>System:</strong> ${msg}`;
+      container.appendChild(toast);
+      setTimeout(() => toast.remove(), 3500);
+    }
+
+    /* ==================== CHART INITIALIZATION ==================== */
+    function initCharts() {
+      const ctxUser = document.getElementById('userFabricChart');
+      if (ctxUser) {
+        state.charts.userFabric = new Chart(ctxUser, {
+          type: 'doughnut',
+          data: {
+            labels: ['Cotton', 'Denim', 'Polyester', 'Silk/Wool'],
+            datasets: [{
+              data: [55, 25, 12, 8],
+              backgroundColor: ['#10b981', '#06b6d4', '#6366f1', '#f59e0b'],
+              borderWidth: 0
+            }]
+          },
+          options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: { legend: { position: 'right', labels: { color: '#94a3b8' } } }
+          }
+        });
+      }
+
+      const ctxBar = document.getElementById('adminMonthlyChart');
+      if (ctxBar) {
+        state.charts.adminBar = new Chart(ctxBar, {
+          type: 'bar',
+          data: {
+            labels: ['May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct'],
+            datasets: [{
+              label: 'Collected (Tons)',
+              data: [38, 42, 45, 50, 54, 58],
+              backgroundColor: '#6366f1',
+              borderRadius: 6
+            }]
+          },
+          options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: { legend: { display: false } },
+            scales: {
+              x: { ticks: { color: '#94a3b8' }, grid: { display: false } },
+              y: { ticks: { color: '#94a3b8' }, grid: { color: 'rgba(255,255,255,0.05)' } }
+            }
+          }
+        });
+      }
+
+      const ctxStream = document.getElementById('adminStreamChart');
+      if (ctxStream) {
+        state.charts.adminStream = new Chart(ctxStream, {
+          type: 'pie',
+          data: {
+            labels: ['Mechanical Fiber', 'Direct Charity', 'Chemical PET'],
+            datasets: [{
+              data: [50, 30, 20],
+              backgroundColor: ['#10b981', '#3b82f6', '#f59e0b'],
+              borderWidth: 0
+            }]
+          },
+          options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: { legend: { position: 'right', labels: { color: '#94a3b8' } } }
+          }
+        });
+      }
+    }
+  </script>
+</body>
+
+</html>

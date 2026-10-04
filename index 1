@@ -1,0 +1,1794 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Sanjay Textiles - Next-Gen Circular Textile Platform</title>
+  <meta name="description"
+    content="Next-Generation Textile Waste Management, Circular Recycling, AI Fabric Classification, and Upcycled Marketplace Platform." />
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Outfit:wght@400;600;700;800&display=swap"
+    rel="stylesheet">
+
+  <!-- Chart.js -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+
+  <style>
+    /* ==========================================================================
+       DESIGN SYSTEM & VARIABLES
+       ========================================================================== */
+    :root {
+      --bg-base: #07090e;
+      --bg-surface: #0e131f;
+      --bg-glass: rgba(18, 26, 43, 0.75);
+      --bg-glass-card: rgba(22, 32, 54, 0.55);
+      --border-color: rgba(255, 255, 255, 0.08);
+      --border-glow: rgba(16, 185, 129, 0.3);
+
+      --text-main: #f8fafc;
+      --text-muted: #94a3b8;
+      --text-dim: #64748b;
+
+      --primary: #10b981;
+      --primary-hover: #059669;
+      --primary-glow: rgba(16, 185, 129, 0.25);
+      
+      --accent-indigo: #6366f1;
+      --accent-indigo-hover: #4f46e5;
+      --accent-cyan: #06b6d4;
+      --accent-amber: #f59e0b;
+
+      --radius-sm: 10px;
+      --radius-md: 16px;
+      --radius-lg: 24px;
+      
+      --shadow-sm: 0 4px 12px rgba(0, 0, 0, 0.2);
+      --shadow-lg: 0 12px 32px rgba(0, 0, 0, 0.4);
+      --backdrop-blur: blur(16px);
+      --transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    [data-theme="light"] {
+      --bg-base: #f1f5f9;
+      --bg-surface: #ffffff;
+      --bg-glass: rgba(255, 255, 255, 0.85);
+      --bg-glass-card: rgba(255, 255, 255, 0.9);
+      --border-color: rgba(0, 0, 0, 0.08);
+      --border-glow: rgba(16, 185, 129, 0.3);
+
+      --text-main: #0f172a;
+      --text-muted: #475569;
+      --text-dim: #94a3b8;
+    }
+
+    /* Reset & Base */
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      background-color: var(--bg-base);
+      color: var(--text-main);
+      line-height: 1.5;
+      overflow-x: hidden;
+      min-height: 100vh;
+      transition: background-color 0.3s ease, color 0.3s ease;
+    }
+
+    h1, h2, h3, h4, h5, h6 {
+      font-family: 'Outfit', sans-serif;
+      font-weight: 700;
+      color: var(--text-main);
+    }
+
+    /* Gradient Text FX */
+    .text-gradient {
+      background: linear-gradient(135deg, #10b981 0%, #06b6d4 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .text-gradient-indigo {
+      background: linear-gradient(135deg, #818cf8 0%, #c084fc 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .text-gradient-gold {
+      background: linear-gradient(135deg, #f59e0b 0%, #fbbf24 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    /* Glass Panels */
+    .glass-panel {
+      background: var(--bg-glass-card);
+      backdrop-filter: var(--backdrop-blur);
+      -webkit-backdrop-filter: var(--backdrop-blur);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-md);
+      box-shadow: var(--shadow-sm);
+      transition: var(--transition);
+    }
+
+    .glass-panel:hover {
+      border-color: rgba(255, 255, 255, 0.15);
+      box-shadow: var(--shadow-lg);
+    }
+
+    /* Buttons & Controls */
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+      padding: 0.65rem 1.25rem;
+      font-size: 0.9rem;
+      font-weight: 600;
+      border-radius: var(--radius-sm);
+      border: none;
+      cursor: pointer;
+      transition: var(--transition);
+      text-decoration: none;
+    }
+
+    .btn:active {
+      transform: scale(0.98);
+    }
+
+    .btn-primary {
+      background: linear-gradient(135deg, #10b981, #059669);
+      color: #ffffff;
+      box-shadow: 0 4px 14px var(--primary-glow);
+    }
+
+    .btn-primary:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(16, 185, 129, 0.4);
+    }
+
+    .btn-indigo {
+      background: linear-gradient(135deg, #6366f1, #4f46e5);
+      color: #ffffff;
+      box-shadow: 0 4px 14px rgba(99, 102, 241, 0.3);
+    }
+
+    .btn-indigo:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(99, 102, 241, 0.4);
+    }
+
+    .btn-gold {
+      background: linear-gradient(135deg, #f59e0b, #d97706);
+      color: #ffffff;
+    }
+
+    .btn-outline {
+      background: transparent;
+      border: 1px solid var(--border-color);
+      color: var(--text-main);
+    }
+
+    .btn-outline:hover {
+      background: rgba(255, 255, 255, 0.05);
+      border-color: var(--text-muted);
+    }
+
+    .btn-sm {
+      padding: 0.4rem 0.85rem;
+      font-size: 0.8rem;
+    }
+
+    /* Inputs & Forms */
+    .form-group {
+      margin-bottom: 1rem;
+    }
+
+    .form-label {
+      display: block;
+      font-size: 0.825rem;
+      font-weight: 600;
+      color: var(--text-muted);
+      margin-bottom: 0.35rem;
+    }
+
+    .form-control {
+      width: 100%;
+      padding: 0.75rem 1rem;
+      background: var(--bg-surface);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-sm);
+      color: var(--text-main);
+      font-size: 0.9rem;
+      transition: var(--transition);
+      outline: none;
+    }
+
+    .form-control:focus {
+      border-color: var(--primary);
+      box-shadow: 0 0 0 3px var(--primary-glow);
+    }
+
+    .form-select {
+      appearance: none;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%2394a3b8'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M19 9l-7 7-7-7'%3E%3C/path%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: right 1rem center;
+      background-size: 1.25rem;
+    }
+
+    /* Badges */
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.3rem;
+      padding: 0.25rem 0.65rem;
+      font-size: 0.75rem;
+      font-weight: 700;
+      border-radius: 20px;
+      text-transform: uppercase;
+      letter-spacing: 0.03em;
+    }
+
+    .badge-emerald { background: rgba(16, 185, 129, 0.15); color: #34d399; border: 1px solid rgba(16, 185, 129, 0.3); }
+    .badge-indigo { background: rgba(99, 102, 241, 0.15); color: #818cf8; border: 1px solid rgba(99, 102, 241, 0.3); }
+    .badge-gold { background: rgba(245, 158, 11, 0.15); color: #fbbf24; border: 1px solid rgba(245, 158, 11, 0.3); }
+    .badge-cyan { background: rgba(6, 182, 212, 0.15); color: #22d3ee; border: 1px solid rgba(6, 182, 212, 0.3); }
+
+    /* Grids */
+    .grid-2 { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1.25rem; }
+    .grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.25rem; }
+    .grid-4 { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1.25rem; }
+
+    /* Custom Scrollbar */
+    ::-webkit-scrollbar { width: 6px; height: 6px; }
+    ::-webkit-scrollbar-track { background: var(--bg-base); }
+    ::-webkit-scrollbar-thumb { background: var(--border-color); border-radius: 3px; }
+    ::-webkit-scrollbar-thumb:hover { background: var(--text-muted); }
+
+    /* ==========================================================================
+       SECTION 1: AUTH WRAPPER
+       ========================================================================== */
+    .auth-wrapper {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      min-height: 100vh;
+      background: var(--bg-base);
+    }
+
+    .auth-hero-panel {
+      position: relative;
+      background: radial-gradient(circle at 20% 30%, rgba(16, 185, 129, 0.15) 0%, transparent 50%),
+                  radial-gradient(circle at 80% 70%, rgba(99, 102, 241, 0.15) 0%, transparent 50%),
+                  #080c14;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      padding: 3.5rem;
+      overflow: hidden;
+      border-right: 1px solid var(--border-color);
+    }
+
+    .hero-orb {
+      position: absolute;
+      border-radius: 50%;
+      filter: blur(80px);
+      pointer-events: none;
+    }
+    .hero-orb-1 { width: 300px; height: 300px; background: rgba(16, 185, 129, 0.2); top: -50px; left: -50px; }
+    .hero-orb-2 { width: 400px; height: 400px; background: rgba(99, 102, 241, 0.15); bottom: -100px; right: -50px; }
+
+    .hero-img-wrap {
+      position: relative;
+      width: 100%;
+      height: 280px;
+      border-radius: var(--radius-md);
+      overflow: hidden;
+      border: 1px solid var(--border-color);
+      box-shadow: var(--shadow-lg);
+    }
+
+    .hero-welcome-img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .hero-slogan-block { margin-top: 2rem; z-index: 2; }
+    .hero-slogan-tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.35rem 0.85rem;
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid var(--border-color);
+      border-radius: 30px;
+      font-size: 0.8rem;
+      color: #34d399;
+      margin-bottom: 1rem;
+    }
+
+    .hero-slogan-title { font-size: 2.5rem; line-height: 1.15; margin-bottom: 0.75rem; }
+    .hero-slogan-sub { color: var(--text-muted); font-size: 0.95rem; max-width: 90%; }
+
+    .hero-stats-row {
+      display: flex;
+      gap: 1.5rem;
+      margin-top: 2rem;
+    }
+
+    .hero-stat-pill {
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid var(--border-color);
+      padding: 0.75rem 1.25rem;
+      border-radius: var(--radius-sm);
+    }
+
+    .hero-stat-num { font-size: 1.3rem; font-weight: 800; color: #ffffff; display: block; }
+    .hero-stat-lbl { font-size: 0.75rem; color: var(--text-dim); }
+
+    .hero-live-ticker {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      border-top: 1px solid var(--border-color);
+      padding-top: 1.25rem;
+      z-index: 2;
+    }
+
+    .auth-form-panel {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: 4rem;
+      max-width: 540px;
+      margin: 0 auto;
+      width: 100%;
+    }
+
+    .auth-form-brand {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      margin-bottom: 2rem;
+    }
+
+    .nav-logo-icon {
+      width: 40px;
+      height: 40px;
+      border-radius: var(--radius-sm);
+      background: linear-gradient(135deg, #10b981, #059669);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.25rem;
+    }
+
+    .role-switch-container {
+      display: flex;
+      background: var(--bg-surface);
+      padding: 4px;
+      border-radius: var(--radius-sm);
+      border: 1px solid var(--border-color);
+      margin-bottom: 1.5rem;
+    }
+
+    .role-switch-btn {
+      flex: 1;
+      padding: 0.6rem;
+      border: none;
+      background: transparent;
+      color: var(--text-muted);
+      font-weight: 600;
+      font-size: 0.85rem;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: var(--transition);
+    }
+
+    .role-switch-btn.active {
+      background: var(--bg-glass-card);
+      color: var(--text-main);
+      box-shadow: var(--shadow-sm);
+    }
+
+    .auth-tab-buttons {
+      display: flex;
+      gap: 1rem;
+      border-bottom: 1px solid var(--border-color);
+      margin-bottom: 1.5rem;
+    }
+
+    .auth-tab-btn {
+      padding: 0.5rem 0.25rem;
+      background: transparent;
+      border: none;
+      border-bottom: 2px solid transparent;
+      color: var(--text-muted);
+      font-weight: 600;
+      font-size: 0.9rem;
+      cursor: pointer;
+    }
+
+    .auth-tab-btn.active {
+      color: var(--primary);
+      border-bottom-color: var(--primary);
+    }
+
+    .quick-fill-box {
+      margin-top: 1.5rem;
+      padding: 1rem;
+      background: var(--bg-surface);
+      border: 1px dashed var(--border-color);
+      border-radius: var(--radius-sm);
+    }
+
+    .quick-fill-title { font-size: 0.75rem; font-weight: 700; color: var(--text-dim); text-transform: uppercase; margin-bottom: 0.5rem; }
+    .quick-fill-btns { display: flex; gap: 0.5rem; }
+
+    /* ==========================================================================
+       SECTION 2: DASHBOARD LAYOUT & NAVBAR / SIDEBAR
+       ========================================================================== */
+    .dashboard-layout {
+      display: grid;
+      grid-template-columns: 260px 1fr;
+      grid-template-rows: 70px 1fr;
+      min-height: 100vh;
+      background: var(--bg-base);
+    }
+
+    .navbar {
+      grid-column: 1 / -1;
+      background: var(--bg-glass);
+      backdrop-filter: var(--backdrop-blur);
+      border-bottom: 1px solid var(--border-color);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 1.75rem;
+      z-index: 100;
+      position: sticky;
+      top: 0;
+    }
+
+    .nav-left, .nav-right {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+
+    .nav-logo {
+      display: flex;
+      align-items: center;
+      gap: 0.65rem;
+      text-decoration: none;
+      font-family: 'Outfit', sans-serif;
+      font-weight: 800;
+      font-size: 1.3rem;
+      color: var(--text-main);
+    }
+
+    .sidebar {
+      background: var(--bg-glass);
+      border-right: 1px solid var(--border-color);
+      padding: 1.5rem 1rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.35rem;
+    }
+
+    .nav-item {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      padding: 0.75rem 1rem;
+      border-radius: var(--radius-sm);
+      color: var(--text-muted);
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 0.875rem;
+      transition: var(--transition);
+    }
+
+    .nav-item:hover {
+      background: rgba(255, 255, 255, 0.04);
+      color: var(--text-main);
+    }
+
+    .nav-item.active {
+      background: var(--primary-glow);
+      color: var(--primary);
+      border: 1px solid rgba(16, 185, 129, 0.2);
+    }
+
+    .nav-item.admin-active.active {
+      background: rgba(99, 102, 241, 0.15);
+      color: var(--accent-indigo);
+      border: 1px solid rgba(99, 102, 241, 0.3);
+    }
+
+    .main-content {
+      padding: 2rem;
+      overflow-y: auto;
+    }
+
+    .tab-content {
+      display: none;
+      animation: fadeIn 0.3s ease-in-out;
+    }
+
+    .tab-content.active {
+      display: block;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(6px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .content-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 1.75rem;
+    }
+
+    .content-header-title h1 { font-size: 1.8rem; line-height: 1.2; }
+    .content-header-title p { color: var(--text-muted); font-size: 0.875rem; margin-top: 0.2rem; }
+
+    /* User Profile Pill */
+    .user-profile-btn {
+      display: flex;
+      align-items: center;
+      gap: 0.65rem;
+      padding: 0.35rem 0.75rem;
+      background: var(--bg-surface);
+      border: 1px solid var(--border-color);
+      border-radius: 30px;
+    }
+
+    .avatar-circle {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #10b981, #059669);
+      color: #fff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 700;
+      font-size: 0.8rem;
+    }
+
+    /* Notification Popover */
+    .notif-popover {
+      display: none;
+      position: absolute;
+      top: 55px;
+      right: 180px;
+      width: 280px;
+      background: var(--bg-surface);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-sm);
+      padding: 1rem;
+      box-shadow: var(--shadow-lg);
+      z-index: 200;
+    }
+
+    .notif-popover.show { display: block; }
+    .notif-item { padding: 0.5rem 0; border-bottom: 1px solid var(--border-color); font-size: 0.8rem; }
+    .notif-item:last-child { border-bottom: none; }
+
+    /* Custom Tables */
+    .custom-table-container { overflow-x: auto; }
+    .custom-table {
+      width: 100%;
+      border-collapse: collapse;
+      text-align: left;
+      font-size: 0.875rem;
+    }
+
+    .custom-table th {
+      padding: 0.85rem 1rem;
+      color: var(--text-dim);
+      font-weight: 700;
+      text-transform: uppercase;
+      font-size: 0.725rem;
+      border-bottom: 1px solid var(--border-color);
+    }
+
+    .custom-table td {
+      padding: 1rem;
+      border-bottom: 1px solid var(--border-color);
+      color: var(--text-main);
+    }
+
+    .custom-table tr:last-child td { border-bottom: none; }
+    .custom-table tr:hover td { background: rgba(255, 255, 255, 0.02); }
+
+    /* Stat Cards */
+    .stat-card {
+      padding: 1.35rem;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    .stat-card-header { display: flex; justify-content: space-between; align-items: center; }
+    .stat-label { font-size: 0.8rem; color: var(--text-muted); font-weight: 600; }
+    .stat-icon { width: 36px; height: 36px; border-radius: var(--radius-sm); display: flex; align-items: center; justify-content: center; font-size: 1.1rem; }
+    .stat-icon-emerald { background: rgba(16, 185, 129, 0.15); }
+    .stat-icon-indigo { background: rgba(99, 102, 241, 0.15); }
+    .stat-icon-cyan { background: rgba(6, 182, 212, 0.15); }
+    .stat-icon-orange { background: rgba(245, 158, 11, 0.15); }
+
+    .stat-value { font-size: 1.8rem; font-weight: 800; margin: 0.5rem 0 0.2rem 0; font-family: 'Outfit'; }
+    .stat-trend { font-size: 0.75rem; color: var(--text-dim); font-weight: 600; }
+    .stat-trend.up { color: #34d399; }
+
+    /* Progress Tracker Steps */
+    .progress-tracker { display: flex; justify-content: space-between; margin: 1.25rem 0; position: relative; }
+    .progress-tracker::before { content: ''; position: absolute; top: 50%; left: 0; right: 0; height: 2px; background: var(--border-color); z-index: 1; transform: translateY(-50%); }
+    .progress-step { width: 28px; height: 28px; border-radius: 50%; background: var(--bg-surface); border: 2px solid var(--border-color); display: flex; align-items: center; justify-content: center; font-size: 0.75rem; font-weight: 700; color: var(--text-dim); z-index: 2; position: relative; }
+    .progress-step.completed { background: var(--primary); border-color: var(--primary); color: #fff; }
+
+    /* AI Scanner Area */
+    .scanner-box {
+      border: 2px dashed var(--border-color);
+      border-radius: var(--radius-md);
+      padding: 2.5rem;
+      text-align: center;
+      background: rgba(10, 15, 26, 0.4);
+      position: relative;
+      overflow: hidden;
+      cursor: pointer;
+      transition: var(--transition);
+    }
+
+    .scanner-box:hover { border-color: var(--primary); background: rgba(16, 185, 129, 0.03); }
+    .scanner-line { position: absolute; top: 0; left: 0; right: 0; height: 3px; background: linear-gradient(90deg, transparent, var(--primary), transparent); display: none; }
+    .scanner-box.scanning .scanner-line { display: block; animation: scanAnim 2s infinite ease-in-out; }
+
+    @keyframes scanAnim {
+      0% { top: 0; }
+      50% { top: 100%; }
+      100% { top: 0; }
+    }
+
+    /* Fabric Grid Selection */
+    .fabric-types-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 0.5rem; }
+    .fabric-type-box {
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-sm);
+      padding: 0.75rem 0.5rem;
+      text-align: center;
+      cursor: pointer;
+      background: var(--bg-surface);
+      transition: var(--transition);
+    }
+    .fabric-type-box.selected, .fabric-type-box:hover { border-color: var(--primary); background: var(--primary-glow); }
+    .fabric-icon { font-size: 1.5rem; display: block; margin-bottom: 0.25rem; }
+    .fabric-name { font-size: 0.75rem; font-weight: 600; }
+
+    /* Product Cards */
+    .product-card {
+      background: var(--bg-glass-card);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-md);
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .product-img { width: 100%; height: 160px; object-fit: cover; background: #1a2332; display: flex; align-items: center; justify-content: center; font-size: 3rem; }
+    .product-body { padding: 1.25rem; flex: 1; display: flex; flex-direction: column; justify-content: space-between; }
+
+    /* Modals */
+    .modal-overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.75);
+      backdrop-filter: blur(8px);
+      z-index: 1000;
+      align-items: center;
+      justify-content: center;
+      padding: 1rem;
+    }
+
+    .modal-overlay.show { display: flex; }
+    .modal-card {
+      background: var(--bg-surface);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-md);
+      padding: 2rem;
+      max-width: 480px;
+      width: 100%;
+      box-shadow: var(--shadow-lg);
+    }
+
+    /* Toast Container */
+    .toast-container {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      z-index: 2000;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .toast {
+      background: var(--bg-surface);
+      border: 1px solid var(--border-color);
+      border-left: 4px solid var(--primary);
+      padding: 0.85rem 1.25rem;
+      border-radius: var(--radius-sm);
+      color: var(--text-main);
+      font-size: 0.875rem;
+      box-shadow: var(--shadow-lg);
+      animation: slideIn 0.3s ease;
+    }
+
+    @keyframes slideIn {
+      from { transform: translateX(100%); opacity: 0; }
+      to { transform: translateX(0); opacity: 1; }
+    }
+
+    /* Responsive */
+    @media (max-width: 1024px) {
+      .grid-4 { grid-template-columns: repeat(2, 1fr); }
+      .grid-3 { grid-template-columns: repeat(2, 1fr); }
+      .auth-wrapper { grid-template-columns: 1fr; }
+      .auth-hero-panel { display: none; }
+    }
+
+    @media (max-width: 768px) {
+      .dashboard-layout { grid-template-columns: 1fr; }
+      .sidebar { display: none; }
+      .grid-2, .grid-3, .grid-4 { grid-template-columns: 1fr; }
+      .fabric-types-grid { grid-template-columns: repeat(3, 1fr); }
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- ==========================================================================
+       SECTION 1: AUTHENTICATION WRAPPER
+       ========================================================================== -->
+  <div class="auth-wrapper" id="authWrapper">
+    <!-- LEFT HERO PANEL -->
+    <div class="auth-hero-panel">
+      <div class="hero-orb hero-orb-1"></div>
+      <div class="hero-orb hero-orb-2"></div>
+
+      <div class="hero-img-wrap">
+        <div id="heroFallback" style="position:absolute; inset:0; display:flex; flex-direction:column; align-items:center; justify-content:center; padding: 2rem; text-align:center; background: linear-gradient(135deg, #060c18, #0d2a4a, #0a3020);">
+          <div style="font-size: 4rem; margin-bottom: 0.5rem;">♻️</div>
+          <div style="font-family:'Outfit',sans-serif; font-weight:800; font-size:1.6rem; color:#ffffff;">
+            Sanjay <span class="text-gradient">Textiles</span>
+          </div>
+          <div style="font-size:0.82rem; color:var(--text-muted); margin-top:0.25rem;">Next-Gen Circular Platform</div>
+        </div>
+      </div>
+
+      <div class="hero-slogan-block">
+        <div class="hero-slogan-tag">🌱 Circular Economy Leaders</div>
+        <h1 class="hero-slogan-title">Weaving a <span class="text-gradient">Greener Tomorrow</span></h1>
+        <p class="hero-slogan-sub">Advanced textile waste management & recycling platform — turning waste into wealth, fabrics into futures.</p>
+
+        <div class="hero-stats-row">
+          <div class="hero-stat-pill">
+            <span class="hero-stat-num">58.4 T</span>
+            <span class="hero-stat-lbl">Waste Diverted</span>
+          </div>
+          <div class="hero-stat-pill">
+            <span class="hero-stat-num">12</span>
+            <span class="hero-stat-lbl">Hub Cities</span>
+          </div>
+          <div class="hero-stat-pill">
+            <span class="hero-stat-num">1,420</span>
+            <span class="hero-stat-lbl">Eco Partners</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="hero-live-ticker">
+        🌐 <strong>Live Status:</strong> All 3 regional recycling plants online with active shredder stations.
+      </div>
+    </div>
+
+    <!-- RIGHT FORM PANEL -->
+    <div class="auth-form-panel">
+      <div class="auth-form-brand">
+        <div class="nav-logo-icon">♻️</div>
+        <span style="font-family: 'Outfit'; font-weight: 800; font-size: 1.5rem;">Sanjay<span class="text-gradient">Textiles</span></span>
+      </div>
+
+      <!-- Portal Switcher -->
+      <div class="role-switch-container">
+        <button type="button" class="role-switch-btn active" id="roleBtnUser" onclick="switchPortal('user')">👤 User Portal</button>
+        <button type="button" class="role-switch-btn" id="roleBtnAdmin" onclick="switchPortal('admin')">🛡️ Admin Portal</button>
+      </div>
+
+      <h2 style="font-size: 1.5rem; margin-bottom: 0.25rem;" id="authPortalTitle">Welcome Back</h2>
+      <p style="color: var(--text-muted); font-size: 0.875rem; margin-bottom: 1.5rem;" id="authPortalSubtitle">Sign in to access your sustainability dashboard</p>
+
+      <div class="auth-tab-buttons" id="authTabButtons">
+        <button type="button" class="auth-tab-btn active" id="tabBtnLogin" onclick="switchAuthTab('login')">Sign In</button>
+        <button type="button" class="auth-tab-btn" id="tabBtnSignup" onclick="switchAuthTab('signup')">Create Account</button>
+      </div>
+
+      <!-- LOGIN FORM -->
+      <div id="loginFormContainer">
+        <form onsubmit="handleLogin(event)">
+          <div class="form-group">
+            <label class="form-label" for="loginEmail">Email Address</label>
+            <input type="email" id="loginEmail" class="form-control" placeholder="user@sanjaytextiles.com" value="sophia@example.com" required />
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="loginPassword">Password</label>
+            <input type="password" id="loginPassword" class="form-control" placeholder="••••••••" value="password" required />
+          </div>
+
+          <button type="submit" class="btn btn-primary" style="width: 100%; font-size: 1rem; margin-top: 0.5rem;">
+            Sign In to Dashboard →
+          </button>
+        </form>
+
+        <div class="quick-fill-box">
+          <div class="quick-fill-title">⚡ 1-Click Demo Fill</div>
+          <div class="quick-fill-btns">
+            <button type="button" class="btn btn-outline btn-sm" onclick="quickFill('user')">👤 Demo User</button>
+            <button type="button" class="btn btn-indigo btn-sm" onclick="quickFill('admin')">🛡️ Demo Admin</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- SIGNUP FORM -->
+      <div id="signupFormContainer" style="display: none;">
+        <form onsubmit="handleSignup(event)">
+          <div class="form-group">
+            <label class="form-label">Full Name / Business</label>
+            <input type="text" class="form-control" placeholder="Sophia Carter" required />
+          </div>
+          <div class="form-group">
+            <label class="form-label">Email Address</label>
+            <input type="email" class="form-control" placeholder="sophia@example.com" required />
+          </div>
+          <div class="form-group">
+            <label class="form-label">Account Role Type</label>
+            <select class="form-control form-select">
+              <option>Individual Household Donor</option>
+              <option>Tailor Boutique / Garment Business</option>
+              <option>Textile Recycler Partner</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Password</label>
+            <input type="password" class="form-control" placeholder="At least 6 characters" required />
+          </div>
+          <button type="submit" class="btn btn-primary" style="width: 100%; font-size: 1rem; margin-top: 0.5rem;">
+            🎁 Register & Claim 100 Points
+          </button>
+        </form>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- ==========================================================================
+       SECTION 2: USER DASHBOARD LAYOUT
+       ========================================================================== -->
+  <div class="dashboard-layout" id="userDashboardLayout" style="display: none;">
+    <!-- Navbar -->
+    <header class="navbar">
+      <div class="nav-left">
+        <a href="#" class="nav-logo">
+          <div class="nav-logo-icon">♻️</div>
+          <span>Sanjay<span class="text-gradient">Textiles</span></span>
+        </a>
+        <span class="badge badge-emerald">User Portal</span>
+      </div>
+
+      <div class="nav-right">
+        <button type="button" class="btn btn-outline btn-sm" onclick="toggleTheme()">🌗 Theme</button>
+        <button type="button" class="btn btn-outline btn-sm" onclick="toggleNotifPopover()" style="position: relative;">
+          🔔 <span style="position: absolute; top:-2px; right:-2px; width: 8px; height: 8px; background: var(--primary); border-radius: 50%;"></span>
+        </button>
+
+        <!-- Notification Popover -->
+        <div class="notif-popover" id="userNotifPopover">
+          <div style="font-weight: 700; font-size: 0.85rem; margin-bottom: 0.5rem;">Notifications</div>
+          <div class="notif-item">
+            <strong>🚚 Pickup Approved (#PK-1089)</strong><br />
+            <span style="color: var(--text-muted);">Collector dispatched for Oct 06</span>
+          </div>
+          <div class="notif-item">
+            <strong>🎁 Bonus Points Credited</strong><br />
+            <span style="color: var(--text-muted);">+100 Welcome Points added</span>
+          </div>
+        </div>
+
+        <div class="badge badge-gold">🌱 <span id="userCarbonDisplay">14.2 SEC</span></div>
+        <div class="badge badge-emerald">⭐ <span id="userPointsDisplay">1,280 Pts</span></div>
+
+        <div class="user-profile-btn">
+          <div class="avatar-circle">SC</div>
+          <div style="line-height: 1.1;">
+            <div style="font-weight: 700; font-size: 0.8rem;">Sophia Carter</div>
+            <div style="font-size: 0.68rem; color: var(--primary);">Gold Eco Champion</div>
+          </div>
+        </div>
+
+        <button class="btn btn-outline btn-sm" onclick="logout()">Logout 🚪</button>
+      </div>
+    </header>
+
+    <!-- Sidebar -->
+    <aside class="sidebar">
+      <a href="#" class="nav-item active" onclick="switchTab(event, 'tabUserOverview')">📊 Overview & Impact</a>
+      <a href="#" class="nav-item" onclick="switchTab(event, 'tabUserSchedule')">🚚 Schedule Pickup</a>
+      <a href="#" class="nav-item" onclick="switchTab(event, 'tabUserScanner')">🧠 AI Fabric Scanner</a>
+      <a href="#" class="nav-item" onclick="switchTab(event, 'tabUserLeaderboard')">🏆 Leaderboard</a>
+      <a href="#" class="nav-item" onclick="switchTab(event, 'tabUserCarbon')">🌱 Carbon Credits</a>
+      <a href="#" class="nav-item" onclick="switchTab(event, 'tabUserMarket')">🛍️ Eco Marketplace</a>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="main-content">
+
+      <!-- TAB 1: OVERVIEW -->
+      <section class="tab-content active" id="tabUserOverview">
+        <div class="content-header">
+          <div class="content-header-title">
+            <h1>Impact Dashboard</h1>
+            <p>Track your environmental metrics, eco points, and circular recycling history.</p>
+          </div>
+          <button class="btn btn-primary" onclick="triggerNavTab('tabUserSchedule')">+ Schedule Pickup</button>
+        </div>
+
+        <div class="grid-4" style="margin-bottom: 1.5rem;">
+          <div class="glass-panel stat-card">
+            <div class="stat-card-header">
+              <span class="stat-label">Total Waste Diverted</span>
+              <div class="stat-icon stat-icon-emerald">📦</div>
+            </div>
+            <div class="stat-value text-gradient">142.5 kg</div>
+            <div class="stat-trend up">↑ +24.5 kg this month</div>
+          </div>
+
+          <div class="glass-panel stat-card">
+            <div class="stat-card-header">
+              <span class="stat-label">CO₂ Offset</span>
+              <div class="stat-icon stat-icon-indigo">🌿</div>
+            </div>
+            <div class="stat-value text-gradient-indigo">385.0 kg</div>
+            <div class="stat-trend up">Equivalent to 15 trees 🌳</div>
+          </div>
+
+          <div class="glass-panel stat-card">
+            <div class="stat-card-header">
+              <span class="stat-label">Water Conserved</span>
+              <div class="stat-icon stat-icon-cyan">💧</div>
+            </div>
+            <div class="stat-value" style="color: var(--accent-cyan);">1,420 L</div>
+            <div class="stat-trend up">Clean drinking water saved</div>
+          </div>
+
+          <div class="glass-panel stat-card">
+            <div class="stat-card-header">
+              <span class="stat-label">Eco Rewards</span>
+              <div class="stat-icon stat-icon-orange">⭐</div>
+            </div>
+            <div class="stat-value text-gradient-gold">1,280 Pts</div>
+            <div class="stat-trend up">Gold Tier Champion 🏆</div>
+          </div>
+        </div>
+
+        <div class="grid-2" style="margin-bottom: 1.5rem;">
+          <div class="glass-panel" style="padding: 1.5rem;">
+            <h3 style="margin-bottom: 1rem; font-size: 1rem;">🎨 Fabric Composition Recycled</h3>
+            <div style="height: 220px; position: relative;">
+              <canvas id="userFabricChart"></canvas>
+            </div>
+          </div>
+
+          <div class="glass-panel" style="padding: 1.5rem; display: flex; flex-direction: column; justify-content: space-between;">
+            <div>
+              <span class="badge badge-emerald" style="margin-bottom: 0.5rem;">Next Scheduled Pickup</span>
+              <h3 style="font-size: 1.2rem; margin-bottom: 0.25rem;">🚚 Request PK-1089 (Cotton/Denim)</h3>
+              <p style="color: var(--text-muted); font-size: 0.85rem; margin-bottom: 1rem;">Date: Oct 06, 2026 • Slot: Morning (9 AM - 12 PM)</p>
+
+              <div class="progress-tracker">
+                <div class="progress-step completed">1</div>
+                <div class="progress-step completed">2</div>
+                <div class="progress-step">3</div>
+                <div class="progress-step">4</div>
+              </div>
+            </div>
+
+            <button class="btn btn-outline" style="width: 100%; margin-top: 1rem;" onclick="openQrModal('PK-1089')">📱 View Shipping QR Tag</button>
+          </div>
+        </div>
+
+        <div class="glass-panel" style="padding: 1.5rem;">
+          <h3 style="margin-bottom: 1rem; font-size: 1rem;">📋 Recent Pickup Requests</h3>
+          <div class="custom-table-container">
+            <table class="custom-table">
+              <thead>
+                <tr>
+                  <th>Request ID</th>
+                  <th>Fabric Details</th>
+                  <th>Weight</th>
+                  <th>Status</th>
+                  <th>Action</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>#PK-1089</td>
+                  <td>Cotton Scraps & Denim Twill</td>
+                  <td>15.0 kg</td>
+                  <td><span class="badge badge-indigo">Dispatched</span></td>
+                  <td><button class="btn btn-outline btn-sm" onclick="openQrModal('PK-1089')">QR Tag</button></td>
+                </tr>
+                <tr>
+                  <td>#PK-1042</td>
+                  <td>Polyester Sportswear Offcuts</td>
+                  <td>28.5 kg</td>
+                  <td><span class="badge badge-emerald">Recycled</span></td>
+                  <td><button class="btn btn-outline btn-sm" onclick="openQrModal('PK-1042')">QR Tag</button></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      <!-- TAB 2: SCHEDULE PICKUP -->
+      <section class="tab-content" id="tabUserSchedule">
+        <div class="content-header">
+          <div class="content-header-title">
+            <h1>Schedule Waste Pickup</h1>
+            <p>Recycle or donate your unwanted garments, boutique scraps, or factory offcuts.</p>
+          </div>
+        </div>
+
+        <div class="grid-2">
+          <div class="glass-panel" style="padding: 1.75rem;">
+            <form onsubmit="handlePickupSubmit(event)">
+              <div class="form-group">
+                <label class="form-label">1. Fabric Type Category</label>
+                <div class="fabric-types-grid">
+                  <div class="fabric-type-box selected" onclick="selectFabric(this)">
+                    <span class="fabric-icon">👕</span>
+                    <div class="fabric-name">Cotton</div>
+                  </div>
+                  <div class="fabric-type-box" onclick="selectFabric(this)">
+                    <span class="fabric-icon">👖</span>
+                    <div class="fabric-name">Denim</div>
+                  </div>
+                  <div class="fabric-type-box" onclick="selectFabric(this)">
+                    <span class="fabric-icon">🎽</span>
+                    <div class="fabric-name">Polyester</div>
+                  </div>
+                  <div class="fabric-type-box" onclick="selectFabric(this)">
+                    <span class="fabric-icon">👗</span>
+                    <div class="fabric-name">Silk/Wool</div>
+                  </div>
+                  <div class="fabric-type-box" onclick="selectFabric(this)">
+                    <span class="fabric-icon">✂️️</span>
+                    <div class="fabric-name">Scraps</div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="grid-2">
+                <div class="form-group">
+                  <label class="form-label">Weight (kg)</label>
+                  <input type="number" step="0.5" id="pickupWeight" class="form-control" value="15" oninput="calcReward()" required />
+                </div>
+                <div class="form-group">
+                  <label class="form-label">Preferred Date</label>
+                  <input type="date" class="form-control" value="2026-10-08" required />
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label class="form-label">Pickup Address</label>
+                <textarea class="form-control" rows="2" required>742 Evergreen Terrace, Sector 4</textarea>
+              </div>
+
+              <button type="submit" class="btn btn-primary" style="width: 100%; font-size: 1rem;">
+                🚀 Confirm & Submit Request
+              </button>
+            </form>
+          </div>
+
+          <div class="glass-panel" style="padding: 1.75rem; display: flex; flex-direction: column; justify-content: space-between;">
+            <div>
+              <span class="badge badge-emerald" style="margin-bottom: 0.75rem;">Instant Reward Calculation</span>
+              <h3 style="font-size: 1.25rem; margin-bottom: 0.5rem;">📊 Estimated Eco Earnings</h3>
+
+              <div style="padding: 1.25rem; background: rgba(16, 185, 129, 0.1); border: 1px solid rgba(16, 185, 129, 0.2); border-radius: var(--radius-sm); margin: 1rem 0;">
+                <div style="font-size: 0.75rem; color: var(--primary); font-weight: 700; text-transform: uppercase;">Estimated Reward Balance</div>
+                <div style="font-size: 2rem; font-weight: 800;" id="calcPoints">+150 Eco Pts</div>
+                <div style="font-size: 0.9rem; color: var(--accent-cyan); font-weight: 700; margin-top: 0.25rem;" id="calcCo2">40.5 kg CO₂ Offset</div>
+              </div>
+            </div>
+
+            <div style="font-size: 0.8rem; color: var(--text-muted);">
+              🛡️ Free doorstep pickup on orders above 10kg. Sealed eco bags provided upon driver arrival.
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- TAB 3: AI SCANNER -->
+      <section class="tab-content" id="tabUserScanner">
+        <div class="content-header">
+          <div class="content-header-title">
+            <h1>AI Fabric Quality Scanner</h1>
+            <p>Neural vision analysis to detect textile fiber composition and recycling compatibility.</p>
+          </div>
+        </div>
+
+        <div class="grid-2">
+          <div class="glass-panel" style="padding: 2rem;">
+            <h3 style="margin-bottom: 1rem; font-size: 1.1rem;">📷 Fabric Sample Scanner</h3>
+            <div class="scanner-box" id="aiScannerBox" onclick="runAiScan('Denim Twill')">
+              <div class="scanner-line"></div>
+              <div style="font-size: 3rem; margin-bottom: 0.5rem;">📸</div>
+              <h4 style="font-size: 1rem; margin-bottom: 0.25rem;">Click to Scan Fabric Sample</h4>
+              <p style="font-size: 0.8rem; color: var(--text-muted);">Simulate computer vision fiber recognition</p>
+            </div>
+
+            <div style="margin-top: 1.5rem;">
+              <span class="form-label">Or Pick Test Presets:</span>
+              <div style="display: flex; gap: 0.5rem; margin-top: 0.5rem;">
+                <button type="button" class="btn btn-outline btn-sm" onclick="runAiScan('Organic Cotton')">👕 Cotton</button>
+                <button type="button" class="btn btn-outline btn-sm" onclick="runAiScan('Denim Twill')">👖 Denim</button>
+                <button type="button" class="btn btn-outline btn-sm" onclick="runAiScan('Polyester Blend')">🎽 Polyester</button>
+              </div>
+            </div>
+          </div>
+
+          <div class="glass-panel" style="padding: 2rem;">
+            <span class="badge badge-indigo" style="margin-bottom: 1rem;">Vision AI v3.2</span>
+            <h3 style="margin-bottom: 1rem; font-size: 1.1rem;">🧠 Scan Results</h3>
+
+            <div id="aiResultBox" style="display: none;">
+              <h2 style="font-size: 1.5rem; color: var(--primary); margin-bottom: 0.75rem;" id="aiResultTitle">Denim Twill Sample</h2>
+
+              <div style="padding: 1rem; background: var(--bg-surface); border-radius: var(--radius-sm); border: 1px solid var(--border-color); margin-bottom: 0.75rem;">
+                <div style="font-size: 0.75rem; color: var(--text-muted);">Fiber Composition</div>
+                <div style="font-weight: 700; font-size: 1rem;" id="aiResultComp">98% Organic Cotton, 2% Elastane</div>
+              </div>
+
+              <div style="padding: 1rem; background: var(--bg-surface); border-radius: var(--radius-sm); border: 1px solid var(--border-color); margin-bottom: 1rem;">
+                <div style="font-size: 0.75rem; color: var(--text-muted);">Recyclability Index</div>
+                <div style="font-weight: 700; font-size: 1rem; color: var(--accent-cyan);" id="aiResultScore">94% High Recyclability</div>
+              </div>
+
+              <button class="btn btn-primary" style="width: 100%;" onclick="triggerNavTab('tabUserSchedule')">Schedule Pickup for Sample →</button>
+            </div>
+
+            <div id="aiPlaceholder" style="color: var(--text-muted); font-size: 0.875rem;">
+              Click scan or pick a sample preset on the left to view composition analysis.
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- TAB 4: LEADERBOARD -->
+      <section class="tab-content" id="tabUserLeaderboard">
+        <div class="content-header">
+          <div class="content-header-title">
+            <h1>Community Leaderboard</h1>
+            <p>Celebrating top donors, tailoring boutiques, and recyclers diverting waste from landfills.</p>
+          </div>
+        </div>
+
+        <div class="glass-panel" style="padding: 1.5rem;">
+          <div class="custom-table-container">
+            <table class="custom-table">
+              <thead>
+                <tr>
+                  <th>Rank</th>
+                  <th>Donor / Partner</th>
+                  <th>Waste Diverted</th>
+                  <th>Points Balance</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>🥇 #1</td>
+                  <td><strong>Sophia Carter</strong> (Individual)</td>
+                  <td>142.5 kg</td>
+                  <td><span class="badge badge-gold">1,280 Pts</span></td>
+                </tr>
+                <tr>
+                  <td>🥈 #2</td>
+                  <td><strong>Sanjay Fashion Atelier</strong> (Boutique)</td>
+                  <td>118.0 kg</td>
+                  <td><span class="badge badge-emerald">940 Pts</span></td>
+                </tr>
+                <tr>
+                  <td>🥉 #3</td>
+                  <td><strong>GreenThread Community NGO</strong></td>
+                  <td>92.4 kg</td>
+                  <td><span class="badge badge-cyan">710 Pts</span></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      <!-- TAB 5: CARBON CREDITS -->
+      <section class="tab-content" id="tabUserCarbon">
+        <div class="content-header">
+          <div class="content-header-title">
+            <h1>Carbon Credit Exchange</h1>
+            <p>Monetize your verified carbon reduction credits ($SEC) or cash out for ESG vouchers.</p>
+          </div>
+        </div>
+
+        <div class="grid-2">
+          <div class="glass-panel" style="padding: 2rem;">
+            <span class="badge badge-gold" style="margin-bottom: 0.75rem;">Verified ESG Credits</span>
+            <h3 style="font-size: 1.3rem; margin-bottom: 0.5rem;">🌱 My Carbon Balance</h3>
+            <div style="font-size: 2.5rem; font-weight: 800; color: var(--accent-amber); margin-bottom: 1rem;">14.2 SEC</div>
+            <p style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 1.5rem;">1 SEC Credit = 10 kg Verified CO₂ Diverted ($2.50 USD market rate).</p>
+            <button class="btn btn-gold" style="width: 100%;" onclick="showToast('Converted 14.2 SEC Credits to $35.50 Voucher!')">
+              💰 Convert SEC Credits to $35.50 Voucher
+            </button>
+          </div>
+
+          <div class="glass-panel" style="padding: 2rem;">
+            <h3 style="font-size: 1.1rem; margin-bottom: 0.75rem;">📈 Corporate Offsetting Buyers</h3>
+            <div style="font-size: 0.85rem; color: var(--text-muted); line-height: 1.8;">
+              • <strong>Patagonia Eco Fund</strong> (Buying 400 SEC)<br />
+              • <strong>Nike Move To Zero</strong> (Buying 800 SEC)<br />
+              • <strong>H&M Conscious Foundation</strong> (Buying 200 SEC)
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- TAB 6: MARKETPLACE -->
+      <section class="tab-content" id="tabUserMarket">
+        <div class="content-header">
+          <div class="content-header-title">
+            <h1>Upcycled Eco Marketplace</h1>
+            <p>Redeem your earned Eco Points for sustainable products and raw fiber materials.</p>
+          </div>
+        </div>
+
+        <div class="grid-3">
+          <div class="product-card">
+            <div class="product-img">👜</div>
+            <div class="product-body">
+              <div>
+                <h4 style="font-size: 1rem;">Upcycled Denim Tote Bag</h4>
+                <p style="font-size: 0.8rem; color: var(--text-muted); margin-top: 0.25rem;">Crafted from 100% recycled pre-loved jeans.</p>
+              </div>
+              <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 1rem;">
+                <span class="badge badge-gold">450 Pts</span>
+                <button class="btn btn-primary btn-sm" onclick="showToast('Redeemed Tote Bag!')">Redeem</button>
+              </div>
+            </div>
+          </div>
+
+          <div class="product-card">
+            <div class="product-img">🧶</div>
+            <div class="product-body">
+              <div>
+                <h4 style="font-size: 1rem;">Recycled Cotton Fiber Yarn (1kg)</h4>
+                <p style="font-size: 0.8rem; color: var(--text-muted); margin-top: 0.25rem;">High tensile industrial yarn for weavers.</p>
+              </div>
+              <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 1rem;">
+                <span class="badge badge-gold">300 Pts</span>
+                <button class="btn btn-primary btn-sm" onclick="showToast('Redeemed Fiber Yarn!')">Redeem</button>
+              </div>
+            </div>
+          </div>
+
+          <div class="product-card">
+            <div class="product-img">🌱</div>
+            <div class="product-body">
+              <div>
+                <h4 style="font-size: 1rem;">Eco Circular Insulation Pad</h4>
+                <p style="font-size: 0.8rem; color: var(--text-muted); margin-top: 0.25rem;">Thermal building pad from shredded blend offcuts.</p>
+              </div>
+              <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 1rem;">
+                <span class="badge badge-gold">600 Pts</span>
+                <button class="btn btn-primary btn-sm" onclick="showToast('Redeemed Insulation Pad!')">Redeem</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+    </main>
+  </div>
+
+
+  <!-- ==========================================================================
+       SECTION 3: ADMIN DASHBOARD LAYOUT
+       ========================================================================== -->
+  <div class="dashboard-layout" id="adminDashboardLayout" style="display: none;">
+    <!-- Navbar -->
+    <header class="navbar" style="border-bottom-color: rgba(99, 102, 241, 0.3);">
+      <div class="nav-left">
+        <a href="#" class="nav-logo">
+          <div class="nav-logo-icon" style="background: linear-gradient(135deg, #6366f1, #4f46e5);">🛡️</div>
+          <span>Sanjay<span class="text-gradient-indigo">Textiles</span></span>
+        </a>
+        <span class="badge badge-indigo">Admin Command Center</span>
+      </div>
+
+      <div class="nav-right">
+        <button type="button" class="btn btn-outline btn-sm" onclick="toggleTheme()">🌗 Theme</button>
+
+        <div class="user-profile-btn">
+          <div class="avatar-circle" style="background: linear-gradient(135deg, #6366f1, #4f46e5);">AD</div>
+          <div style="line-height: 1.1;">
+            <div style="font-weight: 700; font-size: 0.8rem;">Sanjay Administrator</div>
+            <div style="font-size: 0.68rem; color: #818cf8;">Facility Admin</div>
+          </div>
+        </div>
+
+        <button class="btn btn-outline btn-sm" onclick="logout()">Logout 🚪</button>
+      </div>
+    </header>
+
+    <!-- Sidebar -->
+    <aside class="sidebar">
+      <a href="#" class="nav-item admin-active active" onclick="switchAdminTab(event, 'tabAdminOverview')">📊 Command Overview</a>
+      <a href="#" class="nav-item admin-active" onclick="switchAdminTab(event, 'tabAdminPickups')">🚛 Dispatch Queue</a>
+      <a href="#" class="nav-item admin-active" onclick="switchAdminTab(event, 'tabAdminShredder')">⚙️ Shredder Control</a>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="main-content">
+
+      <!-- ADMIN TAB 1: OVERVIEW -->
+      <section class="tab-content active" id="tabAdminOverview">
+        <div class="content-header">
+          <div class="content-header-title">
+            <h1>Facility Command Center</h1>
+            <p>System-wide waste collection stats, processing hub throughput, and emissions audit.</p>
+          </div>
+          <button class="btn btn-indigo" onclick="showToast('ESG Compliance Audit Report Generated!')">📄 Export ESG Report</button>
+        </div>
+
+        <div class="grid-4" style="margin-bottom: 1.5rem;">
+          <div class="glass-panel stat-card">
+            <div class="stat-card-header">
+              <span class="stat-label">Total Diverted</span>
+              <div class="stat-icon stat-icon-indigo">📦</div>
+            </div>
+            <div class="stat-value text-gradient-indigo">58.4 Tons</div>
+            <div class="stat-trend up">↑ +14.2% YoY growth</div>
+          </div>
+
+          <div class="glass-panel stat-card">
+            <div class="stat-card-header">
+              <span class="stat-label">Net Carbon Saved</span>
+              <div class="stat-icon stat-icon-emerald">🌿</div>
+            </div>
+            <div class="stat-value text-gradient">157.6 Tons</div>
+            <div class="stat-trend up">Target achieved 🎯</div>
+          </div>
+
+          <div class="glass-panel stat-card">
+            <div class="stat-card-header">
+              <span class="stat-label">Pending Requests</span>
+              <div class="stat-icon stat-icon-orange">⏳</div>
+            </div>
+            <div class="stat-value" style="color: var(--accent-amber);">3</div>
+            <div class="stat-trend">Requires Dispatch</div>
+          </div>
+
+          <div class="glass-panel stat-card">
+            <div class="stat-card-header">
+              <span class="stat-label">Active Users</span>
+              <div class="stat-icon stat-icon-cyan">👥</div>
+            </div>
+            <div class="stat-value" style="color: var(--accent-cyan);">1,420</div>
+            <div class="stat-trend up">Registered Donors & NGOs</div>
+          </div>
+        </div>
+
+        <div class="grid-2">
+          <div class="glass-panel" style="padding: 1.5rem;">
+            <h3 style="margin-bottom: 1rem; font-size: 1rem;">📈 Monthly Collection Volume (Tons)</h3>
+            <div style="height: 220px; position: relative;">
+              <canvas id="adminMonthlyChart"></canvas>
+            </div>
+          </div>
+
+          <div class="glass-panel" style="padding: 1.5rem;">
+            <h3 style="margin-bottom: 1rem; font-size: 1rem;">♻️ Waste Stream Breakdown</h3>
+            <div style="height: 220px; position: relative;">
+              <canvas id="adminStreamChart"></canvas>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ADMIN TAB 2: DISPATCH QUEUE -->
+      <section class="tab-content" id="tabAdminPickups">
+        <div class="content-header">
+          <div class="content-header-title">
+            <h1>Pickup Dispatch Queue</h1>
+            <p>Approve incoming collection tickets and assign circular recycling streams.</p>
+          </div>
+        </div>
+
+        <div class="glass-panel" style="padding: 1.5rem;">
+          <div class="custom-table-container">
+            <table class="custom-table">
+              <thead>
+                <tr>
+                  <th>Ticket ID</th>
+                  <th>Donor</th>
+                  <th>Fabric</th>
+                  <th>Weight</th>
+                  <th>Status</th>
+                  <th>Actions</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>#PK-1089</td>
+                  <td>Sophia Carter</td>
+                  <td>Cotton Scraps</td>
+                  <td>15.0 kg</td>
+                  <td><span class="badge badge-indigo">Dispatched</span></td>
+                  <td><button class="btn btn-primary btn-sm" onclick="showToast('Approved PK-1089!')">Approve & Assign Stream</button></td>
+                </tr>
+                <tr>
+                  <td>#PK-1090</td>
+                  <td>Atelier Fashion</td>
+                  <td>Denim Twill</td>
+                  <td>42.0 kg</td>
+                  <td><span class="badge badge-gold">Pending</span></td>
+                  <td><button class="btn btn-primary btn-sm" onclick="showToast('Approved PK-1090!')">Approve & Assign Stream</button></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      <!-- ADMIN TAB 3: SHREDDER CONTROL -->
+      <section class="tab-content" id="tabAdminShredder">
+        <div class="content-header">
+          <div class="content-header-title">
+            <h1>Shredder & Baling Control Station</h1>
+            <p>Monitor industrial mechanical shredder RPM, motor temps, and bale output density.</p>
+          </div>
+        </div>
+
+        <div class="grid-2">
+          <div class="glass-panel" style="padding: 2rem;">
+            <span class="badge badge-emerald" style="margin-bottom: 0.75rem;">Shredder Line #1 Active</span>
+            <h3 style="font-size: 1.25rem; margin-bottom: 0.5rem;">⚙️ Primary Shredder Motor RPM</h3>
+            <div style="font-size: 2.5rem; font-weight: 800; color: var(--primary);" id="shredderRpmText">1800 RPM</div>
+            <div style="display: flex; gap: 0.5rem; margin-top: 1.5rem;">
+              <button class="btn btn-outline" onclick="adjustShredder(-200)">- 200 RPM</button>
+              <button class="btn btn-indigo" onclick="adjustShredder(200)">+ 200 RPM Boost</button>
+            </div>
+          </div>
+
+          <div class="glass-panel" style="padding: 2rem;">
+            <span class="badge badge-indigo" style="margin-bottom: 0.75rem;">Hydraulic Press #3</span>
+            <h3 style="font-size: 1.25rem; margin-bottom: 0.5rem;">📦 Fiber Bales Compressed Today</h3>
+            <div style="font-size: 2.5rem; font-weight: 800; color: #818cf8;">14 Bales (7,000 kg)</div>
+            <p style="font-size: 0.8rem; color: var(--text-muted); margin-top: 0.5rem;">Bale Density: 500 kg/m³ | High Quality Grade</p>
+          </div>
+        </div>
+      </section>
+
+    </main>
+  </div>
+
+
+  <!-- ==========================================================================
+       MODALS & TOASTS
+       ========================================================================== -->
+  <!-- QR MODAL -->
+  <div class="modal-overlay" id="qrModal">
+    <div class="modal-card" style="text-align: center;">
+      <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
+        <h3 style="font-size: 1.2rem;">Batch Shipping Tag</h3>
+        <button onclick="closeQrModal()" style="background: none; border: none; color: var(--text-muted); font-size: 1.25rem; cursor: pointer;">&times;</button>
+      </div>
+
+      <div style="padding: 1.5rem; background: #ffffff; border-radius: var(--radius-sm); display: inline-block; margin: 1rem 0;">
+        <!-- Visual QR Placeholder -->
+        <div style="width: 140px; height: 140px; background: #000000; padding: 6px; display: grid; grid-template-columns: repeat(5, 1fr); gap: 4px;">
+          <div style="background: #fff;"></div><div style="background: #fff;"></div><div style="background: #000;"></div><div style="background: #fff;"></div><div style="background: #fff;"></div>
+          <div style="background: #fff;"></div><div style="background: #000;"></div><div style="background: #fff;"></div><div style="background: #000;"></div><div style="background: #fff;"></div>
+          <div style="background: #000;"></div><div style="background: #fff;"></div><div style="background: #fff;"></div><div style="background: #fff;"></div><div style="background: #000;"></div>
+          <div style="background: #fff;"></div><div style="background: #000;"></div><div style="background: #fff;"></div><div style="background: #000;"></div><div style="background: #fff;"></div>
+          <div style="background: #fff;"></div><div style="background: #fff;"></div><div style="background: #000;"></div><div style="background: #fff;"></div><div style="background: #fff;"></div>
+        </div>
+        <div style="font-family: monospace; font-weight: 700; color: #000; margin-top: 0.5rem;" id="qrCodeText">ST-QR-8910-X2</div>
+      </div>
+
+      <p style="font-size: 0.8rem; color: var(--text-muted); margin-bottom: 1.25rem;">Attach this digital QR tag to your shipping container prior to driver collection.</p>
+
+      <button class="btn btn-primary" style="width: 100%;" onclick="window.print()">🖨️ Print Batch Tag</button>
+    </div>
+  </div>
+
+  <div class="toast-container" id="toastContainer"></div>
+
+
+  <!-- ==========================================================================
+       APPLICATION SCRIPT & LOGIC
+       ========================================================================== -->
+  <script>
+    // State
+    let currentRole = 'user';
+    let shredderRpm = 1800;
+
+    // Charts Initializer
+    document.addEventListener('DOMContentLoaded', () => {
+      initCharts();
+    });
+
+    // Portal Switcher
+    function switchPortal(role) {
+      currentRole = role;
+      document.getElementById('roleBtnUser').classList.toggle('active', role === 'user');
+      document.getElementById('roleBtnAdmin').classList.toggle('active', role === 'admin');
+      
+      const title = document.getElementById('authPortalTitle');
+      const sub = document.getElementById('authPortalSubtitle');
+      
+      if (role === 'admin') {
+        title.textContent = 'Admin Control Center';
+        sub.textContent = 'Facility management & processing command';
+      } else {
+        title.textContent = 'Welcome Back';
+        sub.textContent = 'Sign in to access your sustainability dashboard';
+      }
+    }
+
+    function switchAuthTab(tab) {
+      document.getElementById('tabBtnLogin').classList.toggle('active', tab === 'login');
+      document.getElementById('tabBtnSignup').classList.toggle('active', tab === 'signup');
+      document.getElementById('loginFormContainer').style.display = tab === 'login' ? 'block' : 'none';
+      document.getElementById('signupFormContainer').style.display = tab === 'signup' ? 'block' : 'none';
+    }
+
+    function quickFill(role) {
+      switchPortal(role);
+      if (role === 'admin') {
+        document.getElementById('loginEmail').value = 'admin@sanjaytextiles.com';
+      } else {
+        document.getElementById('loginEmail').value = 'sophia@example.com';
+      }
+      document.getElementById('loginPassword').value = 'password123';
+    }
+
+    function handleLogin(e) {
+      e.preventDefault();
+      document.getElementById('authWrapper').style.display = 'none';
+      
+      if (currentRole === 'admin') {
+        document.getElementById('adminDashboardLayout').style.display = 'grid';
+        showToast('Welcome Administrator!');
+      } else {
+        document.getElementById('userDashboardLayout').style.display = 'grid';
+        showToast('Welcome back, Sophia Carter!');
+      }
+    }
+
+    function handleSignup(e) {
+      e.preventDefault();
+      showToast('Account registered! 100 bonus points added.');
+      switchAuthTab('login');
+    }
+
+    function logout() {
+      document.getElementById('userDashboardLayout').style.display = 'none';
+      document.getElementById('adminDashboardLayout').style.display = 'none';
+      document.getElementById('authWrapper').style.display = 'grid';
+      showToast('Logged out successfully.');
+    }
+
+    // Navigation Switches
+    function switchTab(e, tabId) {
+      e.preventDefault();
+      document.querySelectorAll('#userDashboardLayout .nav-item').forEach(el => el.classList.remove('active'));
+      e.currentTarget.classList.add('active');
+
+      document.querySelectorAll('#userDashboardLayout .tab-content').forEach(el => el.classList.remove('active'));
+      document.getElementById(tabId).classList.add('active');
+    }
+
+    function triggerNavTab(tabId) {
+      const link = document.querySelector(`#userDashboardLayout .nav-item[onclick*="${tabId}"]`);
+      if (link) link.click();
+    }
+
+    function switchAdminTab(e, tabId) {
+      e.preventDefault();
+      document.querySelectorAll('#adminDashboardLayout .nav-item').forEach(el => el.classList.remove('active'));
+      e.currentTarget.classList.add('active');
+
+      document.querySelectorAll('#adminDashboardLayout .tab-content').forEach(el => el.classList.remove('active'));
+      document.getElementById(tabId).classList.add('active');
+    }
+
+    // Theme Toggle
+    function toggleTheme() {
+      const current = document.documentElement.getAttribute('data-theme');
+      const next = current === 'light' ? 'dark' : 'light';
+      document.documentElement.setAttribute('data-theme', next);
+      showToast(`Switched to ${next} theme`);
+    }
+
+    function toggleNotifPopover() {
+      document.getElementById('userNotifPopover').classList.toggle('show');
+    }
+
+    // Interactive Logic
+    function selectFabric(el) {
+      document.querySelectorAll('.fabric-type-box').forEach(b => b.classList.remove('selected'));
+      el.classList.add('selected');
+    }
+
+    function calcReward() {
+      const w = parseFloat(document.getElementById('pickupWeight').value) || 0;
+      document.getElementById('calcPoints').textContent = `+${Math.round(w * 10)} Eco Pts`;
+      document.getElementById('calcCo2').textContent = `${(w * 2.7).toFixed(1)} kg CO₂ Offset`;
+    }
+
+    function handlePickupSubmit(e) {
+      e.preventDefault();
+      showToast('Pickup request #PK-1091 submitted!');
+      triggerNavTab('tabUserOverview');
+    }
+
+    function runAiScan(sample) {
+      const box = document.getElementById('aiScannerBox');
+      box.classList.add('scanning');
+
+      setTimeout(() => {
+        box.classList.remove('scanning');
+        document.getElementById('aiPlaceholder').style.display = 'none';
+        document.getElementById('aiResultBox').style.display = 'block';
+
+        if (sample === 'Organic Cotton') {
+          document.getElementById('aiResultTitle').textContent = 'Organic Cotton Offcuts';
+          document.getElementById('aiResultComp').textContent = '100% Pure Organic Cotton';
+          document.getElementById('aiResultScore').textContent = '98% High Recyclability';
+        } else if (sample === 'Polyester Blend') {
+          document.getElementById('aiResultTitle').textContent = 'Polyester Sportswear';
+          document.getElementById('aiResultComp').textContent = '85% Polyester, 15% Elastane';
+          document.getElementById('aiResultScore').textContent = '76% Medium (Chemical Stream)';
+        } else {
+          document.getElementById('aiResultTitle').textContent = 'Pre-loved Denim Twill';
+          document.getElementById('aiResultComp').textContent = '98% Cotton, 2% Elastane';
+          document.getElementById('aiResultScore').textContent = '94% High Recyclability';
+        }
+
+        showToast('AI Fiber Analysis Complete');
+      }, 1200);
+    }
+
+    function adjustShredder(delta) {
+      shredderRpm += delta;
+      document.getElementById('shredderRpmText').textContent = `${shredderRpm} RPM`;
+      showToast(`Shredder RPM adjusted to ${shredderRpm}`);
+    }
+
+    // Modals & Toasts
+    function openQrModal(id) {
+      document.getElementById('qrCodeText').textContent = `ST-${id}-2026`;
+      document.getElementById('qrModal').classList.add('show');
+    }
+
+    function closeQrModal() {
+      document.getElementById('qrModal').classList.remove('show');
+    }
+
+    function showToast(msg) {
+      const container = document.getElementById('toastContainer');
+      const toast = document.createElement('div');
+      toast.className = 'toast';
+      toast.innerHTML = `✨ <strong>System:</strong> ${msg}`;
+      container.appendChild(toast);
+      setTimeout(() => toast.remove(), 3500);
+    }
+
+    // Charts Config
+    function initCharts() {
+      // User Fabric Doughnut
+      const ctxUser = document.getElementById('userFabricChart');
+      if (ctxUser) {
+        new Chart(ctxUser, {
+          type: 'doughnut',
+          data: {
+            labels: ['Cotton', 'Denim', 'Polyester', 'Silk/Wool'],
+            datasets: [{
+              data: [55, 25, 12, 8],
+              backgroundColor: ['#10b981', '#06b6d4', '#6366f1', '#f59e0b'],
+              borderWidth: 0
+            }]
+          },
+          options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: { legend: { position: 'right', labels: { color: '#94a3b8' } } }
+          }
+        });
+      }
+
+      // Admin Monthly Bar
+      const ctxBar = document.getElementById('adminMonthlyChart');
+      if (ctxBar) {
+        new Chart(ctxBar, {
+          type: 'bar',
+          data: {
+            labels: ['May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct'],
+            datasets: [{
+              label: 'Collected (Tons)',
+              data: [38, 42, 45, 50, 54, 58],
+              backgroundColor: '#6366f1',
+              borderRadius: 6
+            }]
+          },
+          options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: { legend: { display: false } },
+            scales: {
+              x: { ticks: { color: '#94a3b8' }, grid: { display: false } },
+              y: { ticks: { color: '#94a3b8' }, grid: { color: 'rgba(255,255,255,0.05)' } }
+            }
+          }
+        });
+      }
+
+      // Admin Stream Pie
+      const ctxStream = document.getElementById('adminStreamChart');
+      if (ctxStream) {
+        new Chart(ctxStream, {
+          type: 'pie',
+          data: {
+            labels: ['Shredded Fiber', 'Charity Upcycle', 'Chemical Recovery'],
+            datasets: [{
+              data: [50, 30, 20],
+              backgroundColor: ['#10b981', '#3b82f6', '#f59e0b'],
+              borderWidth: 0
+            }]
+          },
+          options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: { legend: { position: 'right', labels: { color: '#94a3b8' } } }
+          }
+        });
+      }
+    }
+  </script>
+</body>
+
+</html>
